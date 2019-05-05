@@ -19,15 +19,22 @@ $(function(){
   $("#form2").on("submit", function(event){
     // Преобразуем форму в массив
     //alert("123");
-    //event.preventDefault();
+    
     //var form_data = $("#form2").serializeArray;
 //alert(form_data);
+    //console.log( $(this).serialize() );
+    event.preventDefault();
     $.ajax({
-      url: "test.js",
-      type: 'POST', // Делаем POST запрос
-      data: "test123"
-    }).done(function(){alert("success")});
+      url: "test.php",
+      type: "post", // Делаем POST запрос
+      data: {
+        "img1": $("#img1").val()
+      },
+      success: function(){alert("success")}
+    });
+    
   });
+  //return false;
 });
 
 //$("#form2").on
