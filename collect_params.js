@@ -9,7 +9,7 @@ function Collect_Params(){
     this._img = $("#img2").val()
   } else {alert("Error")}
 };
-$("button").on("click", function(){
+$("#send-form").on("click", function(){
   var Params = new Collect_Params();
   var Str = JSON.stringify(Params);
   alert(Str);
