@@ -1,3 +1,24 @@
+$(function(){
+  $("#form2").on("submit", function(event){
+    event.preventDefault();
+    var Params = {};
+    $("#form2").find("input").each(function(){
+      Params[$(this).attr("id")] = $(this).val();
+    });
+    var Str = JSON.stringify(Params);
+    alert(Str);
+    //console.log($(this).serialize()); //все эл-ты input по name в строку
+
+    /*$.ajax({
+      url: "/test.php",
+      method: "POST",
+      data: {
+        "img1": $("#img1").val()
+      },
+      success: function(){alert("success")}
+    });*/
+  });
+});
 function Collect_Params(){
   this._url = $("#basic-url").val();
   this._headSelect = $("#heading").val();
@@ -10,31 +31,3 @@ function Collect_Params(){
     this._img = $("#img2").val()
   } else {alert("Error")}
 };
-/*$("#send-form").on("click", function(){
-  var Params = new Collect_Params();
-  var Str = JSON.stringify(Params);
-  alert(Str);
-});*/
-$(function(){
-  $("#form2").on("submit", function(event){
-    // Преобразуем форму в массив
-    //alert("123");
-    
-    //var form_data = $("#form2").serializeArray;
-//alert(form_data);
-    //console.log( $(this).serialize() );
-    event.preventDefault();
-    $.ajax({
-      url: "test.php",
-      type: "post", // Делаем POST запрос
-      data: {
-        "img1": $("#img1").val()
-      },
-      success: function(){alert("success")}
-    });
-    
-  });
-  //return false;
-});
-
-//$("#form2").on

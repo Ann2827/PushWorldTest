@@ -1,5 +1,5 @@
 /*firebase.initializeApp({
-  messagingSenderId: '640654845630'
+  messagingSenderId: '320551749342'
 });
 
 // Проверка поддерживаемости уведомлений
