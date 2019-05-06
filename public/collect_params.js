@@ -1,3 +1,13 @@
+var DEFAULT_PUSH_TITLE = "Купить кофеварку";
+$(function(){
+  $("#push-title").html(DEFAULT_PUSH_TITLE);
+})
+$("#title").on("input", function(){
+  $("#push-title").html($(this).val());
+  if(!$(this).val()){
+    $("#push-title").html(DEFAULT_PUSH_TITLE);
+  }
+})
 $(function(){
   $("#form2").on("submit", function(event){
     event.preventDefault();
@@ -19,6 +29,16 @@ $(function(){
     });*/
   });
 });
+/*{
+  "notification": {
+    "title": "Ералаш",
+      "body": "Начало в 21:00",
+        "icon": "https://eralash.ru.rsz.io/sites/all/themes/eralash_v5/logo.png?width=40&height=40",
+          "click_action": "http://eralash.ru/"
+  },
+    "to": "YOUR-TOKEN-ID"
+}*/
+
 function Collect_Params(){
   this._url = $("#basic-url").val();
   this._headSelect = $("#heading").val();
