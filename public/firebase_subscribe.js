@@ -1,4 +1,4 @@
-/*firebase.initializeApp({
+firebase.initializeApp({
   messagingSenderId: '320551749342'
 });
 
@@ -9,12 +9,13 @@ if ('Notification' in window) {
   // Проверка подписки
   if (Notification.permission === 'granted') {
     subscribe();
-  } else {alert("You haven`t subscription")};
+  }
 
   // Подписать пользователя
-  $("#subscribe").on("click", function () {
-    alert("123")
-    //subscribe()
+  $("#form1").on("submit", function (event) {
+    event.preventDefault();
+    alert("123");
+    subscribe()
   })
 } else {alert("Browser don`t support Notification in window")}
 
@@ -71,4 +72,3 @@ function setTokenSentToServer(currentToken) {
     currentToken ? currentToken : ''
   );
 }
-*/
