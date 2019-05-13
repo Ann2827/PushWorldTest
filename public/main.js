@@ -71,15 +71,22 @@ function sendTokenToServer(currentToken) {
   if (!isTokenSentToServer(currentToken)) {
     console.log('Отправка токена на сервер...');
 
+    
     /*var url = ''; // адрес скрипта на сервере который сохраняет ID устройства
     $.post(url, {
       token: currentToken
     });*/
 
     setTokenSentToServer(currentToken);
+    ShowToken(currentToken);
   } else {
     console.log('Токен уже отправлен на сервер.');
+    ShowToken(currentToken);
   }
+}
+function ShowToken(currentToken) {
+  $(".alert").alert("show");
+  $(".alert p").html("Токен: " + currentToken);
 }
 
 // localStorage, если уже подписан
