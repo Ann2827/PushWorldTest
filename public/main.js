@@ -35,7 +35,23 @@ if ('Notification' in window &&
       messaging.useServiceWorker(registration);
     subscribe();
     })
-  })
+  });
+   $("#deleet_token").on("click", function(){
+       messaging.getToken().then(function(currentToken) {
+                messaging.deleteToken(currentToken).then(function() {
+                        console.log('Удаление токена.');
+                        setTokenSentToServer(false);
+                    $(this).addClass("d-none");
+                        // Once token is deleted update UI.
+                    })
+                    .catch(function(error) {
+                        showError('Unable to delete token', error);
+                    });
+            })
+            .catch(function(error) {
+                showError('Error retrieving Instance ID token', error);
+            });
+   }) 
 } else {alert("Browser don`t support Notification in window")}
 
 function subscribe() {
@@ -51,6 +67,7 @@ function subscribe() {
 
       if (currentToken) {
         sendTokenToServer(currentToken);
+          $(".alert").removeClass("d-none");
       } else {
         console.warn('Не удалось получить токен.');
         setTokenSentToServer(false);
@@ -86,7 +103,7 @@ function sendTokenToServer(currentToken) {
 }
 function ShowToken(currentToken) {
   $(".alert").alert("show");
-  $(".alert p").html("Токен: " + currentToken);
+  $(".alert p").html("<b>Токен:</b> " + currentToken);
 }
 
 // localStorage, если уже подписан
@@ -195,10 +212,19 @@ $(function () {
     event.preventDefault();
     var Params = {};
     $("#form2").find("input").each(function () {
-      Params[$(this).attr("id")] = $(this).val();
+      //Params[$(this).attr("id")] = $(this).val();
+       //var Params = new Collect_Params();
+        Params = {
+            body: "It's found today at 0:12",
+click_action: "https://www.nasa.gov/feature/goddard/2016/hubble-sees-a-star-inflating-a-giant-bubble",
+icon: "https://peter-gribanov.github.io/serviceworker/Bubble-Nebula.jpg",
+image: "https://peter-gribanov.github.io/serviceworker/Bubble-Nebula_big.jpg",
+title: "Bubble Nebula"
+        };
     });
     var Str = JSON.stringify(Params);
     alert(Str);
+      sendNotification(Params);
     //console.log($(this).serialize()); //все эл-ты input по name в строку
 
     /*$.ajax({
@@ -220,6 +246,52 @@ $(function () {
   },
     "to": "YOUR-TOKEN-ID"
 }*/
+
+function showError(error, error_data) {
+    if (typeof error_data !== "undefined") {
+        console.error(error, error_data);
+    } else {
+        console.error(error);
+    }
+}
+
+function sendNotification(Params) {
+
+    console.log('Send notification', Params);
+
+    // hide last notification data
+
+    messaging.getToken().then(function(currentToken) {
+            fetch('https://fcm.googleapis.com/fcm/send', {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'key=' + KEY,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    // Firebase loses 'image' from the notification.
+                    // And you must see this: https://github.com/firebase/quickstart-js/issues/71
+                    data: Params,
+                    to: currentToken
+                })
+            }).then(function(response) {
+                return response.json();
+            }).then(function(json) {
+                console.log('Response', json);
+
+                if (json.success === 1) {
+                    console.log('Успех', json.results[0]);
+                } else {
+                    console.log('Ошибка', json.results[0]);
+                }
+            }).catch(function(error) {
+                showError(error);
+            });
+        })
+        .catch(function(error) {
+            showError('Error retrieving Instance ID token', error);
+        });
+}
 
 function Collect_Params() {
   this._url = $("#basic-url").val();
