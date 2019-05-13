@@ -19,6 +19,8 @@ if ('Notification' in window &&
     'postMessage' in window) {
   var messaging = firebase.messaging();
 
+
+    
   //messaging.usePublicVapidKey(KEY);
   // Проверка подписки
   if (Notification.permission === 'granted') {
@@ -28,7 +30,11 @@ if ('Notification' in window &&
   // Подписать пользователя
   $("#form1").on("submit", function (event) {
     event.preventDefault();
-    subscribe()
+    //регистрация вручную, мб будет не нужно на хостинге
+    navigator.serviceWorker.register('firebase-messaging-sw.js').then(function (registration) {
+      messaging.useServiceWorker(registration);
+    subscribe();
+    })
   })
 } else {alert("Browser don`t support Notification in window")}
 
@@ -65,10 +71,10 @@ function sendTokenToServer(currentToken) {
   if (!isTokenSentToServer(currentToken)) {
     console.log('Отправка токена на сервер...');
 
-    var url = ''; // адрес скрипта на сервере который сохраняет ID устройства
+    /*var url = ''; // адрес скрипта на сервере который сохраняет ID устройства
     $.post(url, {
       token: currentToken
-    });
+    });*/
 
     setTokenSentToServer(currentToken);
   } else {
