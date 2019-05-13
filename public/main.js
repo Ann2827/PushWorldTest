@@ -19,6 +19,7 @@ if ('Notification' in window &&
     'postMessage' in window) {
   var messaging = firebase.messaging();
 
+  //messaging.usePublicVapidKey(KEY);
   // Проверка подписки
   if (Notification.permission === 'granted') {
     //subscribe();
@@ -36,9 +37,9 @@ function subscribe() {
   messaging.requestPermission()
     .then(function () {
     // Получаем ID устройства
-    var test1 = messaging.getToken()
-    var Str = JSON.stringify(test1);
-    alert(Str)
+    //alert("123");
+    messaging.getToken()
+    //var Str = JSON.stringify(test1)
       .then(function (currentToken) {
       console.log(currentToken);
 
