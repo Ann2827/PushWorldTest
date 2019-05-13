@@ -1,10 +1,3 @@
-const DEFAULT_PUSH_TITLE = "Купить кофеварку";
-const DEFAULT_PUSH_MESSAGE = "Вы забыли товар в корзине.";
-const DEFAULT_PUSH_ICON = "img/test.jpg";
-const DEFAULT_PUSH_IMG = "img/test.jpg";
-const DEFAULT_PUSH_ERROR = "img/error.png";
-const KEY = "AAAASqJfht4:APA91bFJaIKpQgX-ZkZlgk9hKf122NCy7H17_KLJU-MnStIIAQzAcg5LBXlCF-s0EjdLMT1Uym44xqURZvS31k7WUW6nf1faCoW6G62wuR8EsCzIneITn2j3ZijitOXQaHgfIHL9NpJV";
-
 firebase.initializeApp({
   messagingSenderId: '320551749342'
 });
@@ -15,7 +8,7 @@ if ('Notification' in window) {
 
   // Проверка подписки
   if (Notification.permission === 'granted') {
-    //subscribe();
+    subscribe();
   }
 
   // Подписать пользователя
@@ -31,7 +24,8 @@ function subscribe() {
   messaging.requestPermission()
     .then(function () {
     // Получаем ID устройства
-    messaging.getToken().then(function (currentToken) {
+    messaging.getToken()
+      .then(function (currentToken) {
       console.log(currentToken);
 
       if (currentToken) {
@@ -40,7 +34,8 @@ function subscribe() {
         console.warn('Не удалось получить токен.');
         setTokenSentToServer(false);
       }
-    }).catch(function (err) {
+    })
+      .catch(function (err) {
       console.warn('При получении токена произошла ошибка.', err);
       setTokenSentToServer(false);
     });

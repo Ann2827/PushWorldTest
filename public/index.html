@@ -57,21 +57,12 @@
   </header>
   <div class="container">
     <div class="row">
-      <div class="col-lg-6">
+      <div class="col-lg-7">
         <form id="form1">
           <button type="submit" class="btn btn-secondary rounded-0 btn-lg btn-block mb-5" id="subscribe">Subscribe</button>
         </form>
       </div>
-      <div class="col-lg-1">
-    
-          <button type="submit" class="btn btn-secondary rounded-0 btn-lg btn-block mb-5" id="subscribe-deleet">Del</button>
-    
-      </div>
     </div>
-    
-    
-    
-    
     <div class="row">
       <div class="col-lg-7">
         <form id="form2">
@@ -160,30 +151,19 @@
         </div>
       </div>
     </div>
-    <!-- отредактировать -->
     <div class="row">
-      <div id="alert">
-        <i>warning</i>
-        <strong>Error</strong>
-        <em id="alert-message"></em>
+      <div id="token_div" style="display: none;">
+        <h4>Instance ID Token</h4>
+        <p id="token" style="word-break: break-all;"></p>
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+                onclick="deleteToken()">Delete Token</button>
       </div>
-      
-      <div id="massage_row">
-        <p><strong>Massage id:</strong> <span id="massage_id" style="word-break: break-all;"></span></p>
-      </div>
-      
-      <div id="info">
-        <i>info</i>
-        <span id="info-message"></span>
-      </div>
-     
-
       <!-- div to display the UI to allow the request for permission to
 notify the user. This is shown if the app has not yet been
 granted permission to notify. -->
-      <div id="permission_div">
+      <div id="permission_div" style="display: none;">
         <h4>Needs Permission</h4>
-        <p>токен: </p><p id="token"></p>
+        <p id="token"></p>
         <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
                 onclick="requestPermission()">Request Permission</button>
       </div>
@@ -191,7 +171,6 @@ granted permission to notify. -->
       <div id="messages"></div>
     </div>
   </div>
-  <!-- коенц редактирования -->
   <footer>
     <div class="p-5 mt-5 btn-secondary"></div>
   </footer>
