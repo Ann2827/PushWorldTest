@@ -1,14 +1,13 @@
-var DEFAULT_PUSH_TITLE = "Купить кофеварку";
-var DEFAULT_PUSH_MESSAGE = "Вы забыли товар в корзине.";
-var DEFAULT_PUSH_ICON = "img/test.jpg";
-var DEFAULT_PUSH_IMG = "img/test.jpg";
-var DEFAULT_PUSH_ERROR = "img/error.png";
-var KEY = "AAAASqJfht4:APA91bFJaIKpQgX-ZkZlgk9hKf122NCy7H17_KLJU-MnStIIAQzAcg5LBXlCF-s0EjdLMT1Uym44xqURZvS31k7WUW6nf1faCoW6G62wuR8EsCzIneITn2j3ZijitOXQaHgfIHL9NpJV";
+const DEFAULT_PUSH_TITLE = "Купить кофеварку";
+const DEFAULT_PUSH_MESSAGE = "Вы забыли товар в корзине.";
+const DEFAULT_PUSH_ICON = "img/test.jpg";
+const DEFAULT_PUSH_IMG = "img/test.jpg";
+const DEFAULT_PUSH_ERROR = "img/error.png";
+const KEY = "AAAASqJfht4:APA91bFJaIKpQgX-ZkZlgk9hKf122NCy7H17_KLJU-MnStIIAQzAcg5LBXlCF-s0EjdLMT1Uym44xqURZvS31k7WUW6nf1faCoW6G62wuR8EsCzIneITn2j3ZijitOXQaHgfIHL9NpJV";
 
 firebase.initializeApp({
   messagingSenderId: '320551749342'
 });
-
 
 // Проверка поддерживаемости уведомлений
 if ('Notification' in window &&
@@ -18,9 +17,6 @@ if ('Notification' in window &&
   'postMessage' in window) {
   var messaging = firebase.messaging();
 
-
-
-  //messaging.usePublicVapidKey(KEY);
   // Проверка подписки
   if (Notification.permission === 'granted') {
     //subscribe();
@@ -35,6 +31,8 @@ if ('Notification' in window &&
       subscribe();
     })
   });
+  
+  //Удалить токен
   $("#deleet_token").on("click", function () {
     messaging.getToken().then(function (currentToken) {
         messaging.deleteToken(currentToken).then(function () {
@@ -52,6 +50,7 @@ if ('Notification' in window &&
       });
   });
   
+  //Для показа пушей
   messaging.onMessage(function (payload) {
     console.log('Message received', payload);
 
@@ -72,20 +71,36 @@ if ('Notification' in window &&
     });
   });
 } else {
-  alert("Browser don`t support Notification in window")
+  alert("Browser don`t support Notification in window");
+  
+  if (!('Notification' in window)) {
+    showError('Notification not supported');
+  } else if (!('serviceWorker' in navigator)) {
+    showError('ServiceWorker not supported');
+  } else if (!('localStorage' in window)) {
+    showError('LocalStorage not supported');
+  } else if (!('fetch' in window)) {
+    showError('fetch not supported');
+  } else if (!('postMessage' in window)) {
+    showError('postMessage not supported');
+  }
+
+  console.warn('This browser does not support desktop notification.');
+  console.log('Is HTTPS', window.location.protocol === 'https:');
+  console.log('Support Notification', 'Notification' in window);
+  console.log('Support ServiceWorker', 'serviceWorker' in navigator);
+  console.log('Support LocalStorage', 'localStorage' in window);
+  console.log('Support fetch', 'fetch' in window);
+  console.log('Support postMessage', 'postMessage' in window);
 }
 
+//Подписать
 function subscribe() {
   // Запрос разрешения на получение уведомлений
-  messaging.requestPermission()
-    .then(function () {
+  messaging.requestPermission().then(function () {
       // Получаем ID устройства
-      //alert("123");
-      messaging.getToken()
-        //var Str = JSON.stringify(test1)
-        .then(function (currentToken) {
+      messaging.getToken().then(function (currentToken) {
           console.log(currentToken);
-
           if (currentToken) {
             sendTokenToServer(currentToken);
             $(".alert").removeClass("d-none");
@@ -93,13 +108,11 @@ function subscribe() {
             console.warn('Не удалось получить токен.');
             setTokenSentToServer(false);
           }
-        })
-        .catch(function (err) {
+        }).catch(function (err) {
           console.warn('При получении токена произошла ошибка.', err);
           setTokenSentToServer(false);
         });
-    })
-    .catch(function (err) {
+    }).catch(function (err) {
       console.warn('Не удалось получить разрешение на показ уведомлений.', err);
     });
 }
@@ -108,13 +121,6 @@ function subscribe() {
 function sendTokenToServer(currentToken) {
   if (!isTokenSentToServer(currentToken)) {
     console.log('Отправка токена на сервер...');
-
-
-    /*var url = ''; // адрес скрипта на сервере который сохраняет ID устройства
-    $.post(url, {
-      token: currentToken
-    });*/
-
     setTokenSentToServer(currentToken);
     ShowToken(currentToken);
   } else {
@@ -123,6 +129,7 @@ function sendTokenToServer(currentToken) {
   }
 }
 
+//Отобразить на странице токен
 function ShowToken(currentToken) {
   $(".alert").alert("show");
   $(".alert p").html("<b>Токен:</b> " + currentToken);
@@ -133,6 +140,7 @@ function isTokenSentToServer(currentToken) {
   return window.localStorage.getItem('sentFirebaseMessagingToken') == currentToken;
 }
 
+//Отправка на сервер
 function setTokenSentToServer(currentToken) {
   window.localStorage.setItem(
     'sentFirebaseMessagingToken',
