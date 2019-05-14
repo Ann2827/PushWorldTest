@@ -1,3 +1,7 @@
+$.getScript("test.js", function(){
+  alert('script loaded');
+});
+//TestFunc();
 const DEFAULT_PUSH_TITLE = "Купить кофеварку";
 const DEFAULT_PUSH_MESSAGE = "Вы забыли товар в корзине.";
 const DEFAULT_PUSH_ICON = "img/test.jpg";
