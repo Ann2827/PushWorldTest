@@ -1,4 +1,3 @@
-
 var DEFAULT_PUSH_TITLE = "Купить кофеварку";
 var DEFAULT_PUSH_MESSAGE = "Вы забыли товар в корзине.";
 var DEFAULT_PUSH_ICON = "img/test.jpg";
@@ -13,14 +12,14 @@ firebase.initializeApp({
 
 // Проверка поддерживаемости уведомлений
 if ('Notification' in window &&
-    'serviceWorker' in navigator &&
-    'localStorage' in window &&
-    'fetch' in window &&
-    'postMessage' in window) {
+  'serviceWorker' in navigator &&
+  'localStorage' in window &&
+  'fetch' in window &&
+  'postMessage' in window) {
   var messaging = firebase.messaging();
 
 
-    
+
   //messaging.usePublicVapidKey(KEY);
   // Проверка подписки
   if (Notification.permission === 'granted') {
@@ -33,54 +32,76 @@ if ('Notification' in window &&
     //регистрация вручную, мб будет не нужно на хостинге
     navigator.serviceWorker.register('firebase-messaging-sw.js').then(function (registration) {
       messaging.useServiceWorker(registration);
-    subscribe();
+      subscribe();
     })
   });
-   $("#deleet_token").on("click", function(){
-       messaging.getToken().then(function(currentToken) {
-                messaging.deleteToken(currentToken).then(function() {
-                        console.log('Удаление токена.');
-                        setTokenSentToServer(false);
-                    $(this).addClass("d-none");
-                        // Once token is deleted update UI.
-                    })
-                    .catch(function(error) {
-                        showError('Unable to delete token', error);
-                    });
-            })
-            .catch(function(error) {
-                showError('Error retrieving Instance ID token', error);
-            });
-   }) 
-} else {alert("Browser don`t support Notification in window")}
+  $("#deleet_token").on("click", function () {
+    messaging.getToken().then(function (currentToken) {
+        messaging.deleteToken(currentToken).then(function () {
+            console.log('Удаление токена.');
+            setTokenSentToServer(false);
+            $(this).addClass("d-none");
+            // Once token is deleted update UI.
+          })
+          .catch(function (error) {
+            showError('Unable to delete token', error);
+          });
+      })
+      .catch(function (error) {
+        showError('Error retrieving Instance ID token', error);
+      });
+  });
+  
+  messaging.onMessage(function (payload) {
+    console.log('Message received', payload);
+
+    // register fake ServiceWorker for show notification on mobile devices
+    navigator.serviceWorker.register('firebase-messaging-sw.js');
+    Notification.requestPermission(function (permission) {
+      if (permission === 'granted') {
+        navigator.serviceWorker.ready.then(function (registration) {
+          // Copy data object to get parameters in the click handler
+          payload.data.data = JSON.parse(JSON.stringify(payload.data));
+
+          registration.showNotification(payload.data.title, payload.data);
+        }).catch(function (error) {
+          // registration failed :(
+          showError('ServiceWorker registration failed', error);
+        });
+      }
+    });
+  });
+} else {
+  alert("Browser don`t support Notification in window")
+}
 
 function subscribe() {
   // Запрос разрешения на получение уведомлений
   messaging.requestPermission()
     .then(function () {
-    // Получаем ID устройства
-    //alert("123");
-    messaging.getToken()
-    //var Str = JSON.stringify(test1)
-      .then(function (currentToken) {
-      console.log(currentToken);
+      // Получаем ID устройства
+      //alert("123");
+      messaging.getToken()
+        //var Str = JSON.stringify(test1)
+        .then(function (currentToken) {
+          console.log(currentToken);
 
-      if (currentToken) {
-        sendTokenToServer(currentToken);
-          $(".alert").removeClass("d-none");
-      } else {
-        console.warn('Не удалось получить токен.');
-        setTokenSentToServer(false);
-      }
+          if (currentToken) {
+            sendTokenToServer(currentToken);
+            $(".alert").removeClass("d-none");
+          } else {
+            console.warn('Не удалось получить токен.');
+            setTokenSentToServer(false);
+          }
+        })
+        .catch(function (err) {
+          console.warn('При получении токена произошла ошибка.', err);
+          setTokenSentToServer(false);
+        });
     })
-      .catch(function (err) {
-      console.warn('При получении токена произошла ошибка.', err);
-      setTokenSentToServer(false);
-    });
-  })
     .catch(function (err) {
-    console.warn('Не удалось получить разрешение на показ уведомлений.', err);
-  });
+      console.warn('Не удалось получить разрешение на показ уведомлений.', err);
+    });
 }
 
 // Отправка ID на сервер
@@ -88,7 +109,7 @@ function sendTokenToServer(currentToken) {
   if (!isTokenSentToServer(currentToken)) {
     console.log('Отправка токена на сервер...');
 
-    
+
     /*var url = ''; // адрес скрипта на сервере который сохраняет ID устройства
     $.post(url, {
       token: currentToken
@@ -101,6 +122,7 @@ function sendTokenToServer(currentToken) {
     ShowToken(currentToken);
   }
 }
+
 function ShowToken(currentToken) {
   $(".alert").alert("show");
   $(".alert p").html("<b>Токен:</b> " + currentToken);
@@ -143,32 +165,33 @@ $("#url-icon").on("onerror", function () {
   alert("error");
   //$("#push-icon").attr("src", DEFAULT_PUSH_ERROR);
 });
-function IconError (){
+
+function IconError() {
   $("#push-icon").attr("src", DEFAULT_PUSH_ERROR);
 }
 $("#url-icon").on("input", function () {
-  function Check1(){
+  function Check1() {
     alert("123");
-  /*$.ajax({ 
+    /*$.ajax({ 
 
-    url: $(this).val(), 
-    // dataType: "json", // Для использования JSON формата получаемых данных
-    method: "GET", // Что бы воспользоваться POST методом, меняем данную строку на POST   
-    success: function() {
+      url: $(this).val(), 
+      // dataType: "json", // Для использования JSON формата получаемых данных
+      method: "GET", // Что бы воспользоваться POST методом, меняем данную строку на POST   
+      success: function() {
+        alert("ok");
+      }
+    }).done(function() {
+      alert('Done!');
+    }).fail(function() {
+      alert('Fail!');
+    });*/
+    /*if (CheckURL($(this))) {
+      //$("#push-icon").attr("src", $(this).val());
       alert("ok");
-    }
-  }).done(function() {
-    alert('Done!');
-  }).fail(function() {
-    alert('Fail!');
-  });*/
-  /*if (CheckURL($(this))) {
-    //$("#push-icon").attr("src", $(this).val());
-    alert("ok");
-  } else {
-    alert("error 404")
-  }*/
-  
+    } else {
+      alert("error 404")
+    }*/
+
   };
   if (!$(this).val()) {
     $("#push-icon").attr("src", DEFAULT_PUSH_ICON)
@@ -193,17 +216,21 @@ function CheckURL(url) {
   xmlhttp.onreadystatechange = update;
   if (!xmlhttp.onreadystatechange) {
     return false
-  } else {return true}
+  } else {
+    return true
+  }
   //xmlhttp.send(null);
 
   function update() {
     if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
       alert("ошибка 200");
       return false;
-    }else if (xmlhttp.readyState === 4 && xmlhttp.status === 404) {
+    } else if (xmlhttp.readyState === 4 && xmlhttp.status === 404) {
       alert("ошибка 404");
       return false;
-    } else {return true}
+    } else {
+      return true
+    }
   }
 }
 
@@ -213,18 +240,18 @@ $(function () {
     var Params = {};
     $("#form2").find("input").each(function () {
       //Params[$(this).attr("id")] = $(this).val();
-       //var Params = new Collect_Params();
-        Params = {
-            body: "It's found today at 0:12",
-click_action: "https://www.nasa.gov/feature/goddard/2016/hubble-sees-a-star-inflating-a-giant-bubble",
-icon: "https://peter-gribanov.github.io/serviceworker/Bubble-Nebula.jpg",
-image: "https://peter-gribanov.github.io/serviceworker/Bubble-Nebula_big.jpg",
-title: "Bubble Nebula"
-        };
+      //var Params = new Collect_Params();
+      Params = {
+        body: "It's found today at 0:12",
+        click_action: "https://www.nasa.gov/feature/goddard/2016/hubble-sees-a-star-inflating-a-giant-bubble",
+        icon: "https://peter-gribanov.github.io/serviceworker/Bubble-Nebula.jpg",
+        image: "https://peter-gribanov.github.io/serviceworker/Bubble-Nebula_big.jpg",
+        title: "Bubble Nebula"
+      };
     });
     var Str = JSON.stringify(Params);
     alert(Str);
-      sendNotification(Params);
+    sendNotification(Params);
     //console.log($(this).serialize()); //все эл-ты input по name в строку
 
     /*$.ajax({
@@ -248,49 +275,49 @@ title: "Bubble Nebula"
 }*/
 
 function showError(error, error_data) {
-    if (typeof error_data !== "undefined") {
-        console.error(error, error_data);
-    } else {
-        console.error(error);
-    }
+  if (typeof error_data !== "undefined") {
+    console.error(error, error_data);
+  } else {
+    console.error(error);
+  }
 }
 
 function sendNotification(Params) {
 
-    console.log('Send notification', Params);
+  console.log('Send notification', Params);
 
-    // hide last notification data
+  // hide last notification data
 
-    messaging.getToken().then(function(currentToken) {
-            fetch('https://fcm.googleapis.com/fcm/send', {
-                method: 'POST',
-                headers: {
-                    'Authorization': 'key=' + KEY,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    // Firebase loses 'image' from the notification.
-                    // And you must see this: https://github.com/firebase/quickstart-js/issues/71
-                    data: Params,
-                    to: currentToken
-                })
-            }).then(function(response) {
-                return response.json();
-            }).then(function(json) {
-                console.log('Response', json);
-
-                if (json.success === 1) {
-                    console.log('Успех', json.results[0]);
-                } else {
-                    console.log('Ошибка', json.results[0]);
-                }
-            }).catch(function(error) {
-                showError(error);
-            });
+  messaging.getToken().then(function (currentToken) {
+      fetch('https://fcm.googleapis.com/fcm/send', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'key=' + KEY,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          // Firebase loses 'image' from the notification.
+          // And you must see this: https://github.com/firebase/quickstart-js/issues/71
+          data: Params,
+          to: currentToken
         })
-        .catch(function(error) {
-            showError('Error retrieving Instance ID token', error);
-        });
+      }).then(function (response) {
+        return response.json();
+      }).then(function (json) {
+        console.log('Response', json);
+
+        if (json.success === 1) {
+          console.log('Успех', json.results[0]);
+        } else {
+          console.log('Ошибка', json.results[0]);
+        }
+      }).catch(function (error) {
+        showError(error);
+      });
+    })
+    .catch(function (error) {
+      showError('Error retrieving Instance ID token', error);
+    });
 }
 
 function Collect_Params() {
