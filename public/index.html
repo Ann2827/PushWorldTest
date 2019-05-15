@@ -10,22 +10,28 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <script type="text/javascript" src="https://www.gstatic.com/firebasejs/5.11.1/firebase.js"></script>
-  
+
   <style>
     .center {
       display: block;
       margin: 0 auto;
     }
+
     .jumbotron {
       font-size: 70%;
       width: 340px;
     }
+
     .push-text-block {
       width: 190px;
-      white-space: nowrap; /* Запрещаем перенос строк */
-      overflow: hidden; /* Обрезаем все, что не помещается в область */
-      text-overflow: ellipsis; /* Добавляем многоточие */
+      white-space: nowrap;
+      /* Запрещаем перенос строк */
+      overflow: hidden;
+      /* Обрезаем все, что не помещается в область */
+      text-overflow: ellipsis;
+      /* Добавляем многоточие */
     }
+
     .alert p {
       word-wrap: break-word;
     }
@@ -81,7 +87,7 @@
               <div class="input-group-prepend">
                 <span class="input-group-text rounded-0">URL:</span>
               </div>
-              <input type="url" class="form-control rounded-0 border-top-0 border-right-0" id="basic-url" required>
+              <input type="url" class="form-control rounded-0 border-top-0 border-right-0" id="basic-url" required style="background-color: inherit;">
             </div>
           </div>
           <div class="form-group">
@@ -90,14 +96,44 @@
             <small id="titleHelp" class="form-text text-muted">Please, title.</small>
           </div>
           <div class="form-group">
-            <label for="heading">Heading selector</label>
-            <input type="text" class="form-control rounded-0 border-top-0 border-right-0" id="heading" aria-describedby="headingHelp" placeholder="Enter selector" required>
-            <small id="headingHelp" class="form-text text-muted">Please, input heading selector.</small>
-          </div>
-          <div class="form-group">
             <label for="message">Message</label>
             <input type="text" class="form-control rounded-0 border-top-0 border-right-0" id="message" aria-describedby="messageHelp" placeholder="Enter your message" required>
             <small id="messageHelp" class="form-text text-muted">Please, input message.</small>
+          </div>
+          <div class="form-group">
+            <div class="accordion" id="accordionExample">
+              <div class="card border-bottom">
+                <div class="card-header pl-0" id="headingOne">
+                  <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                      Would you like to add selector in text?
+                    </button>
+                  </h5>
+                </div>
+
+                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                  <div class="card-body">
+                    <div class="form-group">
+                      <label for="heading">Heading selector</label>
+                      <input type="text" class="form-control rounded-0 border-top-0 border-right-0 border-left-0" id="heading" aria-describedby="headingHelp" placeholder="Enter selector" required>
+                      <small id="headingHelp" class="form-text text-muted">Please, input heading selector.</small>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="checkbox" name="inlineRadioOptions" id="CheckboxAddToTitle" value="option2">
+                      <label class="form-check-label" for="CheckboxAddToTitle">Add to Title</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="checkbox" name="inlineRadioOptions" id="CheckboxAddToMessage" value="option3">
+                      <label class="form-check-label" for="CheckboxAddToMessage">Add to Message</label>
+                    </div>
+                    <button type="submit" class="btn btn-outline-secondary rounded-0 mb-1" id="addSelector">Add</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            
+            
           </div>
           <div class="form-group">
             <label for="basic-url">Input URL address icon</label>
@@ -137,25 +173,25 @@
             <div class="form-group" id="option-img">
             </div>
           </div>
-          <button type="submit" class="btn btn-outline-primary rounded-0 center mb-3" id="send-form">Check push</button>
+          <button type="submit" class="btn btn-outline-primary rounded-0 center mb-3" id="send-form" disabled>Check push</button>
         </form>
       </div>
       <div class="col">
         <div class="jumbotron jumbotron-fluid p-3 shadow mb-5 rounded">
           <div class="container">
-           <div class="row">
-               <img src="" width="100" height="100" alt="icon" id="push-icon">
-             <div class="col pr-0">
-               <h5 class="display" id="push-title" placeholder="Enter title"></h5>
-               <p id="push-message" class="push-text-block"></p>
-               <a href="https://push.world" id="push-url" class="text-black-50">push.world</a>
-             </div>
-           </div>
-           <div class="row mt-3">
-             <div class="col-lg pl-0 pr-0">
-               <img src="img/test.jpg" width="310" height="250" alt="image" id="push-img">
-             </div>
-           </div>
+            <div class="row">
+              <img src="" width="100" height="100" alt="icon" id="push-icon">
+              <div class="col pr-0">
+                <h5 class="display" id="push-title" placeholder="Enter title"></h5>
+                <p id="push-message" class="push-text-block"></p>
+                <a href="https://push.world" id="push-url" class="text-black-50">push.world</a>
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div class="col-lg pl-0 pr-0">
+                <img src="img/test.jpg" width="310" height="250" alt="image" id="push-img">
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -164,8 +200,7 @@
       <div id="token_div" style="display: none;">
         <h4>Instance ID Token</h4>
         <p id="token" style="word-break: break-all;"></p>
-        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
-                onclick="deleteToken()">Delete Token</button>
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="deleteToken()">Delete Token</button>
       </div>
       <!-- div to display the UI to allow the request for permission to
 notify the user. This is shown if the app has not yet been
@@ -173,8 +208,7 @@ granted permission to notify. -->
       <div id="permission_div" style="display: none;">
         <h4>Needs Permission</h4>
         <p id="token"></p>
-        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
-                onclick="requestPermission()">Request Permission</button>
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="requestPermission()">Request Permission</button>
       </div>
       <!-- div to display messages received by this app. -->
       <div id="messages"></div>
@@ -199,4 +233,5 @@ granted permission to notify. -->
     });
   </script>
   <script src="main.js"></script>
+  <script src="firebase_subscribe.js"></script>
 </body></html>
