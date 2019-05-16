@@ -33,8 +33,8 @@ if ('Notification' in window &&
       messaging.deleteToken(currentToken).then(function () {
         console.log('Удаление токена.');
         setTokenSentToServer(false);
-        $(this).addClass("d-none");
-        // Once token is deleted update UI.
+        location.reload();
+        //$(".alert").addClass("d-none");
       })
         .catch(function (error) {
         showError('Unable to delete token', error);
@@ -94,6 +94,7 @@ function subscribe() {
   // Запрос разрешения на получение уведомлений
   messaging.requestPermission().then(function () {
     // Получаем ID устройства
+    
     messaging.getToken().then(function (currentToken) {
       console.log(currentToken);
       if (currentToken) {
@@ -146,42 +147,15 @@ function setTokenSentToServer(currentToken) {
 $(function () {
   $("#form2").on("submit", function (event) {
     event.preventDefault();
-    var Params = {};
-    $("#form2").find("input").each(function () {
-      //Params[$(this).attr("id")] = $(this).val();
-      //var Params = new Collect_Params();
-      Params = {
-        body: "It's found today at 0:12",
-        click_action: "https://www.nasa.gov/feature/goddard/2016/hubble-sees-a-star-inflating-a-giant-bubble",
-        icon: "https://peter-gribanov.github.io/serviceworker/Bubble-Nebula.jpg",
-        image: "https://peter-gribanov.github.io/serviceworker/Bubble-Nebula_big.jpg",
-        title: "Bubble Nebula"
-      };
-    });
+    var Params = Collect_Params();
+    
+    //alert для проверки
     var Str = JSON.stringify(Params);
     alert(Str);
+    
     sendNotification(Params);
-    //console.log($(this).serialize()); //все эл-ты input по name в строку
-
-    /*$.ajax({
-      url: "/test.php",
-      method: "POST",
-      data: {
-        "img1": $("#img1").val()
-      },
-      success: function(){alert("success")}
-    });*/
   });
 });
-/*{
-  "notification": {
-    "title": "Ералаш",
-      "body": "Начало в 21:00",
-        "icon": "https://eralash.ru.rsz.io/sites/all/themes/eralash_v5/logo.png?width=40&height=40",
-          "click_action": "http://eralash.ru/"
-  },
-    "to": "YOUR-TOKEN-ID"
-}*/
 
 function showError(error, error_data) {
   if (typeof error_data !== "undefined") {
@@ -230,16 +204,12 @@ function sendNotification(Params) {
 }
 
 function Collect_Params() {
-  this._url = $("#basic-url").val();
-  this._headSelect = $("#heading").val();
-  this._urlIcon = $("#url-icon").val();
-  if ($("#img1").val()) {
-    this._optionImg = "option1";
-    this._img = $("#img1").val()
-  } else if ($("#img2").val()) {
-    this._optionImg = "option2";
-    this._img = $("#img2").val()
-  } else {
-    alert("Error")
-  }
+  var Params = {
+    click_action: $("#basic-url").val(),
+    title: $("#title").val(),
+    body: $("#message").val(),
+    icon: "https://peter-gribanov.github.io/serviceworker/Bubble-Nebula.jpg",
+    image: "https://peter-gribanov.github.io/serviceworker/Bubble-Nebula_big.jpg"
+  };
+  return Params;
 };
