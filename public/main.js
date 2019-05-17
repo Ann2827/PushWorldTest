@@ -39,10 +39,7 @@ $(function () {
   });
 
   $("#loadPush-Img").on("click", function () {
-    CheckImg($("#url-icon").val()).then(
-      response => alert(`Fulfilled: ${response}`),
-      error => alert(`Rejected: ${error}`)
-    );
+    CheckImg($("#url-icon").val());
     
     /*var flag = CheckImg($("#url-icon").val());
     alert("img");
@@ -72,26 +69,40 @@ function CheckImg(url) {
   var XHR = ("onload" in new XMLHttpRequest()) ? XMLHttpRequest : XDomainRequest;
   return new Promise(function (resolve, reject) {
       var xhr = new XHR();
-      xhr.open('GET', url, true);
-      xhr.onload = function () {
-        //alert( this.responseText );
-        if (this.status == 200) {
-          resolve(this.response);
-        } else {
-          var error = new Error(this.statusText);
-          error.code = this.status;
-          reject(error);
-        };
-        flag = true;
-      }
-      xhr.onerror = function () {
-        //alert( 'Ошибка ' + this.status );
-        reject(new Error("Network Error"));
-        flag = false;
-      }
+      //xhr.open('GET', url, true);
+    var promise = new Promise(function(resolve, reject){
+      alert("step1");
+      resolve(xhr.open('GET', url, true))
+    });
+    
+    promise.then(xhr.onload = function(){
+      //alert( this.responseText );
+      
+      if (this.status == 200) {
+        //resolve(this.response);
+        alert( this.responseText );
+      } else {
+        var error = new Error(this.statusText);
+        error.code = this.status;
+        alert(error);
+      };
+      alert("step2");
+      flag = true;
+    }).then(xhr.onerror = function () {
+      //alert( 'Ошибка ' + this.status );
+      reject(new Error("Network Error"));
+      flag = false;
+      alert("step3");
+    }).then(function(){
       xhr.send();
+      alert("step4");
+    }).then(function(){
       alert(flag);
-      return flag;
+      alert("step5");
+    });
+    alert("step6");
+      //alert(flag);
+      //return flag;
     })
   }
 
