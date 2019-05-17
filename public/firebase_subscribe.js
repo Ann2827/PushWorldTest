@@ -209,7 +209,8 @@ function Collect_Params() {
     title: $("#title").val(),
     body: $("#message").val(),
     icon: "https://peter-gribanov.github.io/serviceworker/Bubble-Nebula.jpg",
-    image: "https://peter-gribanov.github.io/serviceworker/Bubble-Nebula_big.jpg"
+    image: "https://peter-gribanov.github.io/serviceworker/Bubble-Nebula_big.jpg",
+    color: "#c31cd9"
   };
   return Params;
 };
