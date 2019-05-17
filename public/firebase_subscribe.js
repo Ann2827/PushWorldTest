@@ -147,13 +147,13 @@ function setTokenSentToServer(currentToken) {
 $(function () {
   $("#form2").on("submit", function (event) {
     event.preventDefault();
-    var Params = Collect_Params();
+    //var Params = Collect_Params();
     
     //alert для проверки
-    var Str = JSON.stringify(Params);
-    alert(Str);
+    //var Str = JSON.stringify(Params);
+    //alert(Str);
     
-    sendNotification(Params);
+    sendNotification();
   });
 });
 
@@ -165,9 +165,9 @@ function showError(error, error_data) {
   }
 }
 
-function sendNotification(Params) {
+function sendNotification() {
 
-  console.log('Send notification', Params);
+  console.log('Send notification');
 
   // hide last notification data
 
@@ -181,7 +181,24 @@ function sendNotification(Params) {
       body: JSON.stringify({
         // Firebase loses 'image' from the notification.
         // And you must see this: https://github.com/firebase/quickstart-js/issues/71
-        data: Params,
+        data: {
+          click_action: $("#basic-url").val(),
+          title: $("#title").val(),
+          body: $("#message").val(),
+          icon: $("#url-icon").val(),
+          image: $("#img2").val(),   
+          color: $("#p1-color").val(),
+          sound: $("#p2-sound").val(),
+          tag: $("#p3-tag").val(),
+          body_loc_key: $("#p4-body_loc_key").val(),
+          body_loc_args: [
+            $("#p5-body_loc_args").val(),
+          ],
+          title_loc_key: $("#p6-title_loc_key").val(),
+          title_loc_args: [
+            $("#p7-title_loc_args").val()
+          ],
+        },
         to: currentToken
       })
     }).then(function (response) {
@@ -208,8 +225,8 @@ function Collect_Params() {
     click_action: $("#basic-url").val(),
     title: $("#title").val(),
     body: $("#message").val(),
-    icon: "https://peter-gribanov.github.io/serviceworker/Bubble-Nebula.jpg",
-    image: "https://peter-gribanov.github.io/serviceworker/Bubble-Nebula_big.jpg",
+    icon: $("#url-icon").val(),
+    image: $("#img2").val(),
     color: "#c31cd9"
   };
   return Params;

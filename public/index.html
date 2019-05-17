@@ -124,7 +124,7 @@
               <div class="card border-bottom">
                 <div class="card-header pl-0" id="headingTwo">
                   <h5 class="mb-0">
-                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseOne">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                       Add image
                     </button>
                   </h5>
@@ -164,6 +164,30 @@
                   </div>
                 </div>
               </div>
+              
+              <div class="card border-bottom">
+                <div class="card-header pl-0" id="headingThree">
+                  <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                      Add parameters
+                    </button>
+                  </h5>
+                </div>
+
+                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                  <div class="card-body">
+                    <div class="form-group">
+                      <input type="text" class="form-control rounded-0 border-top-0 border-right-0" id="p1-color" aria-describedby="colorHelp" placeholder="Color">
+                      <input type="text" class="form-control rounded-0 border-top-0 border-right-0" id="p2-sound" aria-describedby="soundHelp" placeholder="Sound">
+                      <input type="text" class="form-control rounded-0 border-top-0 border-right-0" id="p3-tag" aria-describedby="tagHelp" placeholder="tag">
+                      <input type="text" class="form-control rounded-0 border-top-0 border-right-0" id="p4-body_loc_key" aria-describedby="body_loc_keyHelp" placeholder="body_loc_key">
+                      <input type="text" class="form-control rounded-0 border-top-0 border-right-0" id="p5-body_loc_args" aria-describedby="body_loc_argsHelp" placeholder="body_loc_args">
+                      <input type="text" class="form-control rounded-0 border-top-0 border-right-0" id="p6-title_loc_key" aria-describedby="title_loc_keyHelp" placeholder="title_loc_key">
+                      <input type="text" class="form-control rounded-0 border-top-0 border-right-0" id="p7-title_loc_args" aria-describedby="title_loc_argsHelp" placeholder="title_loc_args">
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
             
           </div>
@@ -179,7 +203,7 @@
               <img src="" width="100" height="100" alt="icon" id="push-icon">
               <div class="col pr-0">
                 <h5 class="display text-break" id="push-title" placeholder="Enter title"></h5>
-                <p id="push-message text-break" class="push-text-block"></p>
+                <p id="push-message" class="push-text-block text-break"></p>
                 <a href="https://push.world" id="push-url" class="text-black-50">push.world</a>
               </div>
             </div>

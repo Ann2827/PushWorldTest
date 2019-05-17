@@ -39,104 +39,126 @@ $(function () {
   });
 
   $("#loadPush-Img").on("click", function () {
-    if(CheckImg($("#url-icon").val())) {
+    CheckImg($("#url-icon").val()).then(
+      response => alert(`Fulfilled: ${response}`),
+      error => alert(`Rejected: ${error}`)
+    );
+    
+    /*var flag = CheckImg($("#url-icon").val());
+    alert("img");
+    if (flag) {
+
       $("#push-icon").attr("src", $("#url-icon").val())
-    }
+    };*/
+
+
     //$("#push-icon").attr("src", $(this).val());
     /*var img = document.createElement('img');
     img.onload = function() { alert("Успех " + this.src) };
     img.onerror = function() { alert("Ошибка " + this.src) };
     img.src = ...*/
     //$("#push-icon").attr("src", DEFAULT_PUSH_ERROR);
-    if (!$(this).val()) {
+    if (!$("#url-icon").val()) {
       $("#push-icon").attr("src", DEFAULT_PUSH_ICON)
     };
   });
-  
+
   ChangeAlert();
 
 })
+
 function CheckImg(url) {
   var flag;
   var XHR = ("onload" in new XMLHttpRequest()) ? XMLHttpRequest : XDomainRequest;
-  var xhr = new XHR();
-  xhr.open('GET', url, true);
-  xhr.onload = function() {
-    alert( this.responseText );
-    flag = true;
+  return new Promise(function (resolve, reject) {
+      var xhr = new XHR();
+      xhr.open('GET', url, true);
+      xhr.onload = function () {
+        //alert( this.responseText );
+        if (this.status == 200) {
+          resolve(this.response);
+        } else {
+          var error = new Error(this.statusText);
+          error.code = this.status;
+          reject(error);
+        };
+        flag = true;
+      }
+      xhr.onerror = function () {
+        //alert( 'Ошибка ' + this.status );
+        reject(new Error("Network Error"));
+        flag = false;
+      }
+      xhr.send();
+      alert(flag);
+      return flag;
+    })
   }
-  xhr.onerror = function() {
-    alert( 'Ошибка ' + this.status );
-    flag = false;
-  }
-  xhr.send();
-  return flag;
-}
 
-function ChangeAlert() {
-  // выбираем целевой элемент
-  var target = document.querySelector(".alert");
-  // создаём экземпляр MutationObserver
-  var observer = new MutationObserver(function (mutations) {
-    mutations.forEach(function (mutation) {
-      var newVal = $(mutation.target).prop(mutation.attributeName);
-      if (mutation.attributeName === "class") {
-        if (!newVal.includes("d-none")) {
-          $("#send-form").removeAttr("disabled");
-          $("#CheckPushHelp").addClass("d-none");
+  function ChangeAlert() {
+    // выбираем целевой элемент
+    var target = document.querySelector(".alert");
+    // создаём экземпляр MutationObserver
+    var observer = new MutationObserver(function (mutations) {
+      mutations.forEach(function (mutation) {
+        var newVal = $(mutation.target).prop(mutation.attributeName);
+        if (mutation.attributeName === "class") {
+          if (!newVal.includes("d-none")) {
+            $("#send-form").removeAttr("disabled");
+            $("#CheckPushHelp").addClass("d-none");
+          }
+          /*else {
+                   $("#send-form").attr("disabled");
+                 }*/
         }
-        /*else {
-                 $("#send-form").attr("disabled");
-               }*/
-      }
-      console.log(mutation.type);
+        console.log(mutation.type);
+      });
     });
-  });
 
-  // конфигурация нашего observer:
-  var config = {
-    attributes: true
-  };
+    // конфигурация нашего observer:
+    var config = {
+      attributes: true
+    };
 
-  // передаём в качестве аргументов целевой элемент и его конфигурацию
-  observer.observe(target, config);
+    // передаём в качестве аргументов целевой элемент и его конфигурацию
+    observer.observe(target, config);
 
-  // позже можно остановить наблюдение
-  //observer.disconnect();
-}
-
-function IconError() {
-  $("#push-icon").attr("src", DEFAULT_PUSH_ERROR);
-}
-
-
-    /*$.ajax({ 
-
-      url: $(this).val(), 
-      // dataType: "json", // Для использования JSON формата получаемых данных
-      method: "GET", // Что бы воспользоваться POST методом, меняем данную строку на POST   
-      success: function() {
-        alert("ok");
-      }
-    }).done(function() {
-      alert('Done!');
-    }).fail(function() {
-      alert('Fail!');
-    });*/
-    /*if (CheckURL($(this))) {
-      //$("#push-icon").attr("src", $(this).val());
-      alert("ok");
-    } else {
-      alert("error 404")
-    }*/
-
-
-/*$("#img").on("input", function(){
-  $("#push-img").html($(this).val());
-  if(!$(this).val()){
-    $("#push-img").html(DEFAULT_PUSH_TITLE);
+    // позже можно остановить наблюдение
+    //observer.disconnect();
   }
-})*/
+
+  function IconError() {
+    $("#push-icon").attr("src", DEFAULT_PUSH_ERROR);
+  }
+
+
+  /*$.ajax({ 
+
+    url: $(this).val(), 
+    // dataType: "json", // Для использования JSON формата получаемых данных
+    method: "GET", // Что бы воспользоваться POST методом, меняем данную строку на POST   
+    success: function() {
+      alert("ok");
+    }
+  }).done(function() {
+    alert('Done!');
+  }).fail(function() {
+    alert('Fail!');
+  });*/
+  /*if (CheckURL($(this))) {
+    //$("#push-icon").attr("src", $(this).val());
+    alert("ok");
+  } else {
+    alert("error 404")
+  }*/
+
+
+  /*$("#img").on("input", function(){
+    $("#push-img").html($(this).val());
+    if(!$(this).val()){
+      $("#push-img").html(DEFAULT_PUSH_TITLE);
+    }
+  })*/
 
   /*if (CheckURL($(this))) {
       //$("#push-icon").attr("src", $(this).val());
@@ -170,7 +192,7 @@ function CheckURL(url) {
       consol.log("Шаг 4: ", xmlhttp.status, "заголовки ", xmlhttp.getAllResponseHeaders, "тело", xmlhttp.responseText)
     }
   }
-  
+
   function update() {
     if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
       alert("ошибка 200");
@@ -182,4 +204,3 @@ function CheckURL(url) {
       return true
     }
   }
-
