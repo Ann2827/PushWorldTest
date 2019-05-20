@@ -39,7 +39,8 @@ $(function () {
   });
 
   $("#loadPush-Img").on("click", function () {
-    CheckImg($("#url-icon").val());
+    //CheckImg($("#url-icon").val());
+    CheckURL($("#url-icon").val());
     
     /*var flag = CheckImg($("#url-icon").val());
     alert("img");
@@ -182,7 +183,7 @@ function CheckImg(url) {
       alert("ok");
     } else {
       alert("error 404")
-}
+}*/
 
 function CheckURL(url) {
   
@@ -193,15 +194,19 @@ function CheckURL(url) {
     xmlhttp = new ActiveXObject("Microsoft.XMLHTTP"); // code for IE6, IE5
   }
   xmlhttp.open('GET', url, false);
-  xmlhttp.send();
+  
   //xmlhttp.onreadystatechange = testfunc;
   xmlhttp.onreadystatechange = update;
-  /*if (!xmlhttp.onreadystatechange) {
-    return false
+  xmlhttp.send(null);
+  if (!xmlhttp.onreadystatechange) {
+    alert("false");
+    //return false
   } else {
-    return true
-  }*/
+    alert("true");
+    //return true
+  }
   //xmlhttp.send(null);
+}
 
   function testfunc() {
     alert("83467");
@@ -219,5 +224,8 @@ function CheckURL(url) {
       return false;
     } else {
       return true
+    }
+    if (xmlhttp.readyState === 4) {
+      alert(xmlhttp.status);
     }
   }
