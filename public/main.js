@@ -72,35 +72,41 @@ function CheckImg(url) {
       //xhr.open('GET', url, true);
     var promise = new Promise(function(resolve, reject){
       alert("step1");
-      resolve(xhr.open('GET', url, true))
+      resolve(xhr.open('GET', url, true));
+        alert("step2");
     });
     
     promise.then(xhr.onload = function(){
       //alert( this.responseText );
-      
+      alert("step3");
+        alert(this.status);
       if (this.status == 200) {
         //resolve(this.response);
+          alert("step4");
         alert( this.responseText );
       } else {
         var error = new Error(this.statusText);
         error.code = this.status;
         alert(error);
+          alert("step5");
       };
-      alert("step2");
+      alert("step6");
       flag = true;
     }).then(xhr.onerror = function () {
       //alert( 'Ошибка ' + this.status );
+        alert("step7");
       reject(new Error("Network Error"));
       flag = false;
-      alert("step3");
+      alert("step8");
     }).then(function(){
+        alert("step9");
       xhr.send();
-      alert("step4");
+      alert("step10");
     }).then(function(){
       alert(flag);
-      alert("step5");
+      alert("step11");
     });
-    alert("step6");
+    alert("step12");
       //alert(flag);
       //return flag;
     })
