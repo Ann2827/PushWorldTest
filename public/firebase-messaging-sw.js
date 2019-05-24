@@ -27,7 +27,7 @@ messaging.setBackgroundMessageHandler(function(payload) {
 //---------------------------------------------------------
 // регистрируем свой обработчик уведомлений
 messaging.setBackgroundMessageHandler(function(payload) {
-  if (typeof payload.data.time != 'undefined') {
+  /*if (typeof payload.data.time != 'undefined') {
     var time = new Date(payload.data.time * 1000);
     var now = new Date();
 
@@ -46,7 +46,7 @@ messaging.setBackgroundMessageHandler(function(payload) {
   }
 
   // Сохраяем data для получения пареметров в обработчике клика
-  payload.data.data = payload.data;
+  payload.data.data = payload.data;*/
 
   // Показываем уведомление
   return self.registration.showNotification(payload.data.title, payload.data);

@@ -182,6 +182,7 @@ function sendNotification() {
           // Firebase loses 'image' from the notification.
           // And you must see this: https://github.com/firebase/quickstart-js/issues/71
           data: {
+            subtitle: "test",
             action1_title: "Sale",
             action1_url: "https://www.planeta-sport.ru/catalog/sale/s",
             action1_icon: null,
