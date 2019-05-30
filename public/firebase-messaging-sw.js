@@ -5,7 +5,7 @@ importScripts('https://www.gstatic.com/firebasejs/5.11.1/firebase-messaging.js')
 firebase.initializeApp({
   messagingSenderId: '320551749342'
 });
-
+alert("123");
 const messaging = firebase.messaging();
 // [END initialize_firebase_in_sw]
 

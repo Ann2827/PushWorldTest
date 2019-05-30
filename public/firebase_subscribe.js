@@ -56,8 +56,41 @@ if ('Notification' in window &&
         navigator.serviceWorker.ready.then(function (registration) {
           // Copy data object to get parameters in the click handler
           payload.data.data = JSON.parse(JSON.stringify(payload.data));
+          
+          const veselie = {
+            body: payload.data.message,
+            icon: 'https://sportiv.ru/f/product/big_junior_set_sin1.jpg',
+            image: '',
+            vibrate: 400,
+            direction: 'auto',
+            tag: 'uuid',
+            badge: '',
+            requireInteraction: true,
+            click_action: 'https://sportiv.ru/f/product/big_junior_set_sin1.jpg',
+            url: "https://sportiv.ru/f/product/big_junior_set_sin1.jpg",
+            actions: [{
+              title: "like-button2title",
+              action: "like-button2title",
+              link: "https://yandex.ru",
+              icon: 'https://sportiv.ru/f/product/big_junior_set_sin1.jpg',
+              url: "https://yandex.ru",
+              click_action: 'https://sportiv.ru/f/product/big_junior_set_sin1.jpg'
+            }],
+            data: {
+              buttons: [
+                {
+                  title: "like-button2title",
+                  action: "like-button2title",
+                  url: "https://yandex.ru",
+                  link: "https://yandex.ru",
+                  icon: 'https://sportiv.ru/f/product/big_junior_set_sin1.jpg',
+                  click_action: 'https://sportiv.ru/f/product/big_junior_set_sin1.jpg'
+                }
+              ]
+            }
+          };
 
-          registration.showNotification(payload.data.title, payload.data);
+          registration.showNotification('payload.data.titlde', veselie);
         }).catch(function (error) {
           // registration failed :(
           showError('ServiceWorker registration failed', error);
@@ -178,19 +211,26 @@ function sendNotification() {
           'Authorization': 'key=' + KEY,
           'Content-Type': 'application/json'
         },
+       
         body: JSON.stringify({
           // Firebase loses 'image' from the notification.
           // And you must see this: https://github.com/firebase/quickstart-js/issues/71
           data: {
-            subtitle: "test",
-            action1_title: "Sale",
-            action1_url: "https://www.planeta-sport.ru/catalog/sale/s",
-            action1_icon: null,
+            buttons: [
+              {
+                action: "like-button",
+                url: "https://example.com"
+              },
+              {
+                action: "read-more-button",
+                url: "https://example.com"
+              }
+            ],
             click_action: $("#basic-url").val(),
             title: $("#title").val(),
-            body: $("#message").val(),
+            message: $("#message").val(),
             icon: $("#url-icon").val(),
-            image: $("#img2").val(),
+            image_large: $("#img2").val(),
             color: $("#p1-color").val(),
             sound: $("#p2-sound").val(),
             tag: $("#p3-tag").val(),
