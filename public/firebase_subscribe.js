@@ -66,7 +66,7 @@ if ('Notification' in window &&
             tag: 'uuid',
             badge: '',
             requireInteraction: true,
-            click_action: 'https://sportiv.ru/f/product/big_junior_set_sin1.jpg',
+            
             url: "https://sportiv.ru/f/product/big_junior_set_sin1.jpg",
             actions: [{
               title: "like-button2title",
@@ -77,6 +77,7 @@ if ('Notification' in window &&
               click_action: 'https://sportiv.ru/f/product/big_junior_set_sin1.jpg'
             }],
             data: {
+              click_action: 'https://sportiv.ru/f/product/big_junior_set_sin1.jpg',
               buttons: [
                 {
                   title: "like-button2title",
