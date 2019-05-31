@@ -5,6 +5,7 @@ const DEFAULT_PUSH_IMG = "img/test.jpg";
 const DEFAULT_PUSH_ERROR = "img/error.png";
 
 $(function () {
+  //add img radio buttons
   $("input[type=radio]").on("click", function () {
     if ($("input[type=radio][value=option1]").is(":checked")) {
       $("#img-option1").removeClass("d-none");
@@ -19,6 +20,7 @@ $(function () {
     }
   });
 
+  //заголовки в конструктор пуша
   $("#push-title").html(DEFAULT_PUSH_TITLE);
   $("#push-message").html(DEFAULT_PUSH_MESSAGE);
   $("#push-icon").attr("src", DEFAULT_PUSH_ICON);
@@ -113,6 +115,7 @@ function CheckImg(url) {
     })
   }
 
+//проверка подписки
   function ChangeAlert() {
     // выбираем целевой элемент
     var target = document.querySelector(".alert");
@@ -133,7 +136,7 @@ function CheckImg(url) {
       });
     });
 
-    // конфигурация нашего observer:
+    // конфигурация observer:
     var config = {
       attributes: true
     };

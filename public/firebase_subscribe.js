@@ -45,60 +45,7 @@ if ('Notification' in window &&
       });
   });
 
-  //Для показа пушей
-  messaging.onMessage(function (payload) {
-    console.log('Message received', payload);
 
-    // register fake ServiceWorker for show notification on mobile devices
-    navigator.serviceWorker.register('firebase-messaging-sw.js');
-    Notification.requestPermission(function (permission) {
-      if (permission === 'granted') {
-        navigator.serviceWorker.ready.then(function (registration) {
-          // Copy data object to get parameters in the click handler
-          payload.data.data = JSON.parse(JSON.stringify(payload.data));
-          
-          const veselie = {
-            body: payload.data.message,
-            icon: 'https://sportiv.ru/f/product/big_junior_set_sin1.jpg',
-            image: '',
-            vibrate: 400,
-            direction: 'auto',
-            tag: 'uuid',
-            badge: '',
-            requireInteraction: true,
-            
-            url: "https://sportiv.ru/f/product/big_junior_set_sin1.jpg",
-            actions: [{
-              title: "like-button2title",
-              action: "like-button2title",
-              link: "https://yandex.ru",
-              icon: 'https://sportiv.ru/f/product/big_junior_set_sin1.jpg',
-              url: "https://yandex.ru",
-              click_action: 'https://sportiv.ru/f/product/big_junior_set_sin1.jpg'
-            }],
-            data: {
-              click_action: 'https://sportiv.ru/f/product/big_junior_set_sin1.jpg',
-              buttons: [
-                {
-                  title: "like-button2title",
-                  action: "like-button2title",
-                  url: "https://yandex.ru",
-                  link: "https://yandex.ru",
-                  icon: 'https://sportiv.ru/f/product/big_junior_set_sin1.jpg',
-                  click_action: 'https://sportiv.ru/f/product/big_junior_set_sin1.jpg'
-                }
-              ]
-            }
-          };
-
-          registration.showNotification('payload.data.titlde', veselie);
-        }).catch(function (error) {
-          // registration failed :(
-          showError('ServiceWorker registration failed', error);
-        });
-      }
-    });
-  });
 } else {
   alert("Browser don`t support Notification in window");
 
@@ -178,6 +125,7 @@ function setTokenSentToServer(currentToken) {
   );
 }
 
+//отправка параметров notification на сервер
 $(function () {
   $("#form2").on("submit", function (event) {
     event.preventDefault();
@@ -217,16 +165,6 @@ function sendNotification() {
           // Firebase loses 'image' from the notification.
           // And you must see this: https://github.com/firebase/quickstart-js/issues/71
           data: {
-            buttons: [
-              {
-                action: "like-button",
-                url: "https://example.com"
-              },
-              {
-                action: "read-more-button",
-                url: "https://example.com"
-              }
-            ],
             click_action: $("#basic-url").val(),
             title: $("#title").val(),
             message: $("#message").val(),
@@ -242,17 +180,7 @@ function sendNotification() {
             title_loc_key: $("#p6-title_loc_key").val(),
             title_loc_args: [
             $("#p7-title_loc_args").val()
-          ],
-            action: "123123",
-            options: {
-              actions: [
-                {
-                  action: "123",
-                  title: "123",
-                  icon: "https://sportiv.ru/f/product/big_junior_set_sin1.jpg"
-                                }
-                            ]
-            }
+          ]
           },
           to: currentToken
         })
@@ -286,24 +214,3 @@ function Collect_Params() {
   };
   return Params;
 };
-//---------------------------
-/*{
-  "send_after": "3600",
-  "multicast": {
-    "title": "{:category_title}",
-    "text": "Одежда, обувь и снаряжение для спортсменов и путешественников.",
-    "life_time": "21600",
-    "duration": "60",
-    "action1_title": "Sale",
-    "action1_url": "https://www.planeta-sport.ru/catalog/sale/?utm_source=push-notification&utm_medium=push-world&utm_campaign=push1",
-    "action1_icon": null,
-    "action2_title": "Акции",
-    "action2_url": "https://www.planeta-sport.ru/catalog/promo/?utm_source=push-notification&utm_medium=push-world&utm_campaign=push1",
-    "action2_icon": null,
-    "abandoned_cart_timeout": "3600",
-    "abandoned_cart_url": "{:abandoned_url}?utm_source=push-notification&utm_medium=push-world&utm_campaign=push1",
-    "abandoned_cart_enabled": 1,
-    "url": "{:abandoned_url}?utm_source=push-notification&utm_medium=push-world&utm_campaign=push1",
-    "type": 6
-  }
-}*/
