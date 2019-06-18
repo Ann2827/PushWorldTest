@@ -2,9 +2,12 @@
 importScripts('https://www.gstatic.com/firebasejs/5.11.1/firebase-app.js');
 importScripts('https://www.gstatic.com/firebasejs/5.11.1/firebase-messaging.js');
 
+const SENDER_ID = "320551749342";
+
 firebase.initializeApp({
-  messagingSenderId: '320551749342'
+  messagingSenderId: SENDER_ID
 });
+
 const messaging = firebase.messaging();
 // [END initialize_firebase_in_sw]
 
@@ -23,16 +26,7 @@ messaging.setBackgroundMessageHandler(function(payload) {
 });
 // [END background_handler]*/
 
-//---------------------------------------------------------
-// регистрируем свой обработчик уведомлений
-messaging.setBackgroundMessageHandler(function(payload) {
 
-  // Сохраяем data для получения пареметров в обработчике клика
-  //payload.data.data = payload.data;
-
-  // Показываем уведомление
-  return self.registration.showNotification(payload.data.title, payload.data);
-});
 
 // свой обработчик клика по уведомлению
 self.addEventListener('notificationclick', function(event) {

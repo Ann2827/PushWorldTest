@@ -1,243 +1,245 @@
 <!DOCTYPE html>
 <html lang="ru">
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <title>Тестирование push-уведомлений.</title>
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  <script type="text/javascript" src="https://www.gstatic.com/firebasejs/5.11.1/firebase.js"></script>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Тестирование push-уведомлений.</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/firebasejs/5.11.1/firebase.js"></script>
 
-  <style>
-    .center {
-      display: block;
-      margin: 0 auto;
-    }
+    <style>
+      .center {
+        display: block;
+        margin: 0 auto;
+      }
 
-    .jumbotron {
-      font-size: 70%;
-      width: 340px;
-    }
+      .jumbotron {
+        font-size: 70%;
+        width: 340px;
+      }
 
-    .push-text-block {
-      width: 190px;
-      white-space: nowrap;
-      /* Запрещаем перенос строк */
-      overflow: hidden;
-      /* Обрезаем все, что не помещается в область */
-      text-overflow: ellipsis;
-      /* Добавляем многоточие */
-    }
+      .push-text-block {
+        width: 190px;
+        white-space: nowrap;
+        /* Запрещаем перенос строк */
+        overflow: hidden;
+        /* Обрезаем все, что не помещается в область */
+        text-overflow: ellipsis;
+        /* Добавляем многоточие */
+      }
 
-    .alert p {
-      word-wrap: break-word;
-    }
-  </style>
-</head>
+      .alert p {
+        word-wrap: break-word;
+      }
+    </style>
+  </head>
 
-<body>
-  <header>
-    <nav class="navbar navbar-expand-lg navbar-light shadow mb-5 rounded" style="background-color: #e3f2fd;">
-      <a class="navbar-brand" href="index.html">Push.world.test</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarColor03">
-      </div>
-    </nav>
-  </header>
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-7">
-        <form id="form1">
-          <button type="submit" class="btn btn-secondary rounded-0 btn-lg btn-block mb-5" id="subscribe">Subscribe</button>
-        </form>
-        <div class="alert alert-success fade show d-none" role="alert">
-          <p></p>
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close" id="deleet_token">
-            <span aria-hidden="true" style="font-size: 40%;">Удалить токен &times;</span>
-          </button>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-light shadow mb-5 rounded" style="background-color: #e3f2fd;">
+        <a class="navbar-brand" href="index.html">Push.world.test</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarColor03">
         </div>
-        <form id="form2">
-          <div class="form-group">
-            <label for="basic-url">Input URL address page</label>
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text rounded-0">URL:</span>
-              </div>
-              <input type="url" class="form-control rounded-0 border-top-0 border-right-0" id="basic-url" style="background-color: inherit;">
-            </div>
+      </nav>
+    </header>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-7">
+          <form id="form1">
+            <button type="submit" class="btn btn-secondary rounded-0 btn-lg btn-block mb-5" id="subscribe">Subscribe</button>
+          </form>
+          <div class="alert alert-success fade show d-none" role="alert">
+            <p></p>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close" id="deleet_token">
+              <span aria-hidden="true" style="font-size: 40%;">Удалить токен &times;</span>
+            </button>
           </div>
-          <div class="form-group">
-            <label for="heading">Title</label>
-            <input type="text" class="form-control rounded-0 border-top-0 border-right-0" id="title" aria-describedby="titleHelp" placeholder="Enter title" required>
-            <small id="titleHelp" class="form-text text-muted">Please, title.</small>
-          </div>
-          <div class="form-group">
-            <label for="message">Message</label>
-            <input type="text" class="form-control rounded-0 border-top-0 border-right-0" id="message" aria-describedby="messageHelp" placeholder="Enter your message">
-            <small id="messageHelp" class="form-text text-muted">Please, input message.</small>
-          </div>
-          <div class="form-group">
-            <label for="basic-url">Input URL address icon</label>
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text rounded-0">URL:</span>
-              </div>
-              <input type="url" class="form-control rounded-0 border-top-0 border-right-0" id="url-icon">
-              <button type="button" class="btn btn-outline-secondary rounded-0 ml-1" id="loadPush-Img">Load</button>
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="accordion" id="accordionExample">
-              <div class="card">
-                <div class="card-header pl-0" id="headingOne">
-                  <h5 class="mb-0">
-                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                      Add selector in text
-                    </button>
-                  </h5>
+          <form id="form2">
+            <div class="form-group">
+              <label for="basic-url">Input URL address page</label>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text rounded-0">URL:</span>
                 </div>
-
-                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
-                  <div class="card-body">
-                    <div class="form-group">
-                      <label for="heading">Heading selector</label>
-                      <input type="text" class="form-control rounded-0 border-top-0 border-right-0 border-left-0" id="heading" aria-describedby="headingHelp" placeholder="Enter selector">
-                      <small id="headingHelp" class="form-text text-muted">Please, input heading selector.</small>
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="checkbox" name="inlineRadioOptions" id="CheckboxAddToTitle" value="option2">
-                      <label class="form-check-label" for="CheckboxAddToTitle">Add to Title</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="checkbox" name="inlineRadioOptions" id="CheckboxAddToMessage" value="option3">
-                      <label class="form-check-label" for="CheckboxAddToMessage">Add to Message</label>
-                    </div>
-                    <button type="submit" class="btn btn-outline-secondary rounded-0 mb-1" id="addSelector">Add</button>
+                <input type="url" class="form-control rounded-0 border-top-0 border-right-0" id="basic-url" style="background-color: inherit;">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="heading">Title</label>
+              <input type="text" class="form-control rounded-0 border-top-0 border-right-0" id="title" aria-describedby="titleHelp" placeholder="Enter title" required>
+              <small id="titleHelp" class="form-text text-muted">Please, title.</small>
+            </div>
+            <div class="form-group">
+              <label for="message">Message</label>
+              <input type="text" class="form-control rounded-0 border-top-0 border-right-0" id="message" aria-describedby="messageHelp" placeholder="Enter your message">
+              <small id="messageHelp" class="form-text text-muted">Please, input message.</small>
+            </div>
+            <div class="form-group">
+              <label for="basic-url">Input URL address icon</label>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text rounded-0">URL:</span>
+                </div>
+                <input type="url" class="form-control rounded-0 border-top-0 border-right-0" id="url-icon">
+                <button type="button" class="btn btn-outline-secondary rounded-0 ml-1" id="loadPush-Img">Load</button>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="accordion" id="accordionExample">
+                <div class="card">
+                  <div class="card-header pl-0" id="headingOne">
+                    <h5 class="mb-0">
+                      <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                        Add selector in text
+                      </button>
+                    </h5>
                   </div>
-                </div>
-              </div>
-              <div class="card border-bottom">
-                <div class="card-header pl-0" id="headingTwo">
-                  <h5 class="mb-0">
-                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                      Add image
-                    </button>
-                  </h5>
-                </div>
 
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                  <div class="card-body">
-                    <div class="form-group">
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" checked>
-                        <label class="form-check-label" for="inlineRadio1">Selector img</label>
-                      </div>
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-                        <label class="form-check-label" for="inlineRadio2">Default img</label>
-                      </div>
-                      <div class="form-group" id="img-option1">
-                        <label for="heading">Img selector</label>
-                        <input type="text" class="form-control rounded-0 border-top-0 border-right-0 border-left-0" id="img1" aria-describedby="ImgHelp" placeholder="Enter selector" name="img1">
+                  <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                    <div class="card-body">
+                      <div class="form-group">
+                        <label for="heading">Heading selector</label>
+                        <input type="text" class="form-control rounded-0 border-top-0 border-right-0 border-left-0" id="heading" aria-describedby="headingHelp" placeholder="Enter selector">
                         <small id="headingHelp" class="form-text text-muted">Please, input heading selector.</small>
                       </div>
-                      <div class="form-group d-none" id="img-option2">
-                        <label for="basic-url-img">Input URL address img</label>
-                        <div class="input-group mb-3">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text rounded-0">URL:</span>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="inlineRadioOptions" id="CheckboxAddToTitle" value="option2">
+                        <label class="form-check-label" for="CheckboxAddToTitle">Add to Title</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="inlineRadioOptions" id="CheckboxAddToMessage" value="option3">
+                        <label class="form-check-label" for="CheckboxAddToMessage">Add to Message</label>
+                      </div>
+                      <button type="submit" class="btn btn-outline-secondary rounded-0 mb-1" id="addSelector">Add</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="card border-bottom">
+                  <div class="card-header pl-0" id="headingTwo">
+                    <h5 class="mb-0">
+                      <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Add image
+                      </button>
+                    </h5>
+                  </div>
+
+                  <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                    <div class="card-body">
+                      <div class="form-group">
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" checked>
+                          <label class="form-check-label" for="inlineRadio1">Selector img</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                          <label class="form-check-label" for="inlineRadio2">Default img</label>
+                        </div>
+                        <div class="form-group" id="img-option1">
+                          <label for="heading">Img selector</label>
+                          <input type="text" class="form-control rounded-0 border-top-0 border-right-0 border-left-0" id="img1" aria-describedby="ImgHelp" placeholder="Enter selector" name="img1">
+                          <small id="headingHelp" class="form-text text-muted">Please, input heading selector.</small>
+                        </div>
+                        <div class="form-group d-none" id="img-option2">
+                          <label for="basic-url-img">Input URL address img</label>
+                          <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text rounded-0">URL:</span>
+                            </div>
+                            <input type="url" class="form-control rounded-0 border-top-0 border-right-0" id="img2">
                           </div>
-                          <input type="url" class="form-control rounded-0 border-top-0 border-right-0" id="img2">
+                        </div>
+                        <div class="alert alert-danger d-none" role="alert" id="img-error">
+                          Error!
+                        </div>
+                        <div class="form-group" id="option-img">
                         </div>
                       </div>
-                      <div class="alert alert-danger d-none" role="alert" id="img-error">
-                        Error!
-                      </div>
-                      <div class="form-group" id="option-img">
-                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
-              
-              <div class="card border-bottom">
-                <div class="card-header pl-0" id="headingThree">
-                  <h5 class="mb-0">
-                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                      Add parameters
-                    </button>
-                  </h5>
                 </div>
 
-                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-                  <div class="card-body">
-                    <div class="form-group">
-                     <label>for android</label>
-                      <input type="text" class="form-control rounded-0 border-top-0 border-right-0" id="p1-color" aria-describedby="colorHelp" placeholder="Color">
-                      <input type="text" class="form-control rounded-0 border-top-0 border-right-0" id="p2-sound" aria-describedby="soundHelp" placeholder="Sound">
-                      <input type="text" class="form-control rounded-0 border-top-0 border-right-0" id="p3-tag" aria-describedby="tagHelp" placeholder="tag">
-                      <input type="text" class="form-control rounded-0 border-top-0 border-right-0" id="p4-body_loc_key" aria-describedby="body_loc_keyHelp" placeholder="body_loc_key">
-                      <input type="text" class="form-control rounded-0 border-top-0 border-right-0" id="p5-body_loc_args" aria-describedby="body_loc_argsHelp" placeholder="body_loc_args">
-                      <input type="text" class="form-control rounded-0 border-top-0 border-right-0" id="p6-title_loc_key" aria-describedby="title_loc_keyHelp" placeholder="title_loc_key">
-                      <input type="text" class="form-control rounded-0 border-top-0 border-right-0" id="p7-title_loc_args" aria-describedby="title_loc_argsHelp" placeholder="title_loc_args">
+                <div class="card border-bottom">
+                  <div class="card-header pl-0" id="headingThree">
+                    <h5 class="mb-0">
+                      <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        Add parameters
+                      </button>
+                    </h5>
+                  </div>
+
+                  <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                    <div class="card-body">
+                      <div class="form-group">
+                        <label>for android</label>
+                        <input type="text" class="form-control rounded-0 border-top-0 border-right-0" id="p1-color" aria-describedby="colorHelp" placeholder="Color">
+                        <input type="text" class="form-control rounded-0 border-top-0 border-right-0" id="p2-sound" aria-describedby="soundHelp" placeholder="Sound">
+                        <input type="text" class="form-control rounded-0 border-top-0 border-right-0" id="p3-tag" aria-describedby="tagHelp" placeholder="tag">
+                        <input type="text" class="form-control rounded-0 border-top-0 border-right-0" id="p4-badge" aria-describedby="badgeHelp" placeholder="badge">
+                        <input type="text" class="form-control rounded-0 border-top-0 border-right-0" id="p5-renotify" aria-describedby="renotifyHelp" placeholder="renotify">
+                        <input type="text" class="form-control rounded-0 border-top-0 border-right-0" id="p6-silent" aria-describedby="silentHelp" placeholder="silent">
+                        <input type="text" class="form-control rounded-0 border-top-0 border-right-0" id="p7-timestamp" aria-describedby="timestampHelp" placeholder="timestamp">
+                        <input type="text" class="form-control rounded-0 border-top-0 border-right-0" id="p8-noscreen" aria-describedby="noscreenHelp" placeholder="noscreen">
+                        <input type="text" class="form-control rounded-0 border-top-0 border-right-0" id="p9-sticky" aria-describedby="stickyHelp" placeholder="sticky">
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
+
             </div>
-            
-          </div>
-          
-          <small id="CheckPushHelp" class="text-danger">Subscribe first.</small>
-          <button type="submit" class="btn btn-outline-primary rounded-0 center mb-3" id="send-form" form="form2" disabled>Check push</button>
-        </form>
-      </div>
-      <div class="col">
-        <div class="jumbotron jumbotron-fluid p-3 shadow mb-5 rounded">
-          <div class="container">
-            <div class="row">
-              <img src="" width="100" height="100" alt="icon" id="push-icon">
-              <div class="col pr-0">
-                <h5 class="display text-break" id="push-title" placeholder="Enter title"></h5>
-                <p id="push-message" class="push-text-block text-break"></p>
-                <a href="https://push.world" id="push-url" class="text-black-50">push.world</a>
+
+            <small id="CheckPushHelp" class="text-danger">Subscribe first.</small>
+            <button type="submit" class="btn btn-outline-primary rounded-0 center mb-3" id="send-form" form="form2" disabled>Check push</button>
+          </form>
+        </div>
+        <div class="col">
+          <div class="jumbotron jumbotron-fluid p-3 shadow mb-5 rounded">
+            <div class="container">
+              <div class="row">
+                <img src="" width="100" height="100" alt="icon" id="push-icon">
+                <div class="col pr-0">
+                  <h5 class="display text-break" id="push-title" placeholder="Enter title"></h5>
+                  <p id="push-message" class="push-text-block text-break"></p>
+                  <a href="https://push.world" id="push-url" class="text-black-50">push.world</a>
+                </div>
               </div>
-            </div>
-            <div class="row mt-3">
-              <div class="col-lg pl-0 pr-0">
-                <img src="img/test.jpg" width="310" height="250" alt="image" id="push-img">
+              <div class="row mt-3">
+                <div class="col-lg pl-0 pr-0">
+                  <img src="img/test.jpg" width="310" height="250" alt="image" id="push-img">
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="row">
-      <div id="token_div" style="display: none;">
-        <h4>Instance ID Token</h4>
-        <p id="token" style="word-break: break-all;"></p>
-        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="deleteToken()">Delete Token</button>
-      </div>
-      <!-- div to display the UI to allow the request for permission to
+      <div class="row">
+        <div id="token_div" style="display: none;">
+          <h4>Instance ID Token</h4>
+          <p id="token" style="word-break: break-all;"></p>
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="deleteToken()">Delete Token</button>
+        </div>
+        <!-- div to display the UI to allow the request for permission to
 notify the user. This is shown if the app has not yet been
 granted permission to notify. -->
-      <div id="permission_div" style="display: none;">
-        <h4>Needs Permission</h4>
-        <p id="token"></p>
-        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="requestPermission()">Request Permission</button>
+        <div id="permission_div" style="display: none;">
+          <h4>Needs Permission</h4>
+          <p id="token"></p>
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="requestPermission()">Request Permission</button>
+        </div>
+        <!-- div to display messages received by this app. -->
+        <div id="messages"></div>
       </div>
-      <!-- div to display messages received by this app. -->
-      <div id="messages"></div>
     </div>
-  </div>
-  <footer>
-    <div class="p-5 mt-5 btn-secondary"></div>
-  </footer>
-  <script src="main.js"></script>
-  <script src="firebase_subscribe.js"></script>
-</body></html>
+    <footer>
+      <div class="p-5 mt-5 btn-secondary"></div>
+    </footer>
+    <script src="main.js"></script>
+    <script src="firebase_subscribe.js"></script>
+  </body></html>
