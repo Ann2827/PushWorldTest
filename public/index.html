@@ -90,9 +90,18 @@
                 <!--<button type="button" class="btn btn-outline-secondary rounded-0 ml-1" id="loadPush-Img">Load</button>-->
               </div>
             </div>
+            <div class="form-group" id="img-option2">
+              <label for="basic-url-img">Адрес картинки</label>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text rounded-0">URL:</span>
+                </div>
+                <input type="url" class="form-control rounded-0 border-top-0 border-right-0" id="img2" value="https://www.respublica.ru/uploads/01/00/00/by/31/large_83496bd950e85fef.jpg">
+              </div>
+            </div>
             <div class="form-group">
               <div class="accordion" id="accordionExample">
-                <div class="card">
+                <!--<div class="card">
                   <div class="card-header pl-0" id="headingOne">
                     <h5 class="mb-0">
                       <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
@@ -119,8 +128,10 @@
                       <button type="submit" class="btn btn-outline-secondary rounded-0 mb-1" id="addSelector">Add</button>
                     </div>
                   </div>
-                </div>
-                <div class="card border-bottom">
+                </div>-->
+                
+                
+                <!--<div class="card border-bottom">
                   <div class="card-header pl-0" id="headingTwo">
                     <h5 class="mb-0">
                       <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
@@ -162,13 +173,13 @@
                       </div>
                     </div>
                   </div>
-                </div>
+                </div>-->
 
                 <div class="card border-bottom">
                   <div class="card-header pl-0" id="headingThree">
                     <h5 class="mb-0">
                       <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                        Add parameters
+                        Дополнительные поля
                       </button>
                     </h5>
                   </div>
@@ -176,16 +187,16 @@
                   <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
                     <div class="card-body">
                       <div class="form-group">
-                        <label>Доп. поля</label>
-                        <input type="text" class="form-control rounded-0 border-top-0 border-right-0" id="p1-color" aria-describedby="colorHelp" placeholder="Color">
-                        <input type="text" class="form-control rounded-0 border-top-0 border-right-0" id="p2-sound" aria-describedby="soundHelp" placeholder="Sound">
+                        <small><a href="https://developer.mozilla.org/ru/docs/Web/API/notification">https://developer.mozilla.org/ru/docs/Web/API/notification</a></small>
+                        <input type="text" class="form-control rounded-0 border-top-0 border-right-0" id="p1-color" aria-describedby="colorHelp" placeholder="color">
+                        <input type="text" class="form-control rounded-0 border-top-0 border-right-0" id="p2-sound" aria-describedby="soundHelp" placeholder="sound">
                         <input type="text" class="form-control rounded-0 border-top-0 border-right-0" id="p3-tag" aria-describedby="tagHelp" placeholder="tag">
                         <input type="text" class="form-control rounded-0 border-top-0 border-right-0" id="p4-badge" aria-describedby="badgeHelp" placeholder="badge">
-                        <input type="text" class="form-control rounded-0 border-top-0 border-right-0" id="p5-renotify" aria-describedby="renotifyHelp" placeholder="renotify">
-                        <input type="text" class="form-control rounded-0 border-top-0 border-right-0" id="p6-silent" aria-describedby="silentHelp" placeholder="silent">
+                        <input type="text" class="form-control rounded-0 border-top-0 border-right-0" id="p5-renotify" aria-describedby="renotifyHelp" placeholder="renotify (boolean)">
+                        <input type="text" class="form-control rounded-0 border-top-0 border-right-0" id="p6-silent" aria-describedby="silentHelp" placeholder="silent (boolean)">
                         <input type="text" class="form-control rounded-0 border-top-0 border-right-0" id="p7-timestamp" aria-describedby="timestampHelp" placeholder="timestamp">
-                        <input type="text" class="form-control rounded-0 border-top-0 border-right-0" id="p8-noscreen" aria-describedby="noscreenHelp" placeholder="noscreen">
-                        <input type="text" class="form-control rounded-0 border-top-0 border-right-0" id="p9-sticky" aria-describedby="stickyHelp" placeholder="sticky">
+                        <input type="text" class="form-control rounded-0 border-top-0 border-right-0" id="p8-noscreen" aria-describedby="noscreenHelp" placeholder="noscreen (не поддерживается?)">
+                        <input type="text" class="form-control rounded-0 border-top-0 border-right-0" id="p9-sticky" aria-describedby="stickyHelp" placeholder="sticky (не поддерживается?)">
                       </div>
                     </div>
                   </div>

@@ -58,9 +58,22 @@ messaging.setBackgroundMessageHandler(function(payload) {
 //});
 
 // свой обработчик клика по уведомлению
-/*self.addEventListener('notificationclick', function (event) {
+
+self.addEventListener('notificationclick', function (event) {
     // извлекаем адрес перехода из параметров уведомления 
-    const target = event.notification.data.click_action || '/';
+  var target = event.notification.data.click_action || '/';
+  if(event.action) {
+    console.log("click button ", event.action);
+    if(event.notification.data.buttons[0].action === event.action){
+      console.log("переход на ", event.notification.actions[0].url);
+      target = event.notification.actions[0].url;
+    };
+    if(event.notification.data.buttons[1].action === event.action){
+      console.log("переход на ", event.notification.actions[1].url);
+      target = event.notification.actions[1].url;
+    };
+  }
+  
     event.notification.close();
 
     // этот код должен проверять список открытых вкладок и переключатся на открытую
@@ -69,7 +82,6 @@ messaging.setBackgroundMessageHandler(function(payload) {
         type: 'window',
         includeUncontrolled: true
     }).then(function (clientList) {
-        // clientList почему-то всегда пуст!?
         for (var i = 0; i < clientList.length; i++) {
             var client = clientList[i];
             if (client.url == target && 'focus' in client) {
@@ -80,4 +92,4 @@ messaging.setBackgroundMessageHandler(function(payload) {
         // Открываем новое окно
         return clients.openWindow(target);
     }));
-});*/
+});

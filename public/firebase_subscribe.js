@@ -74,12 +74,32 @@ if (CheckNotification) {
                 icon: payload.notification.actions["0"].action1_icon
               }
             ],*/
+            actions: [
+              {
+                title: "title action1",
+                action: "action1",
+                icon: "https://www.respublica.ru/uploads/00/00/00/69/xa/large_9267c233ea84395b.jpg",
+                url: "https://www.google.ru/"
+              },
+              {
+                title: "title action2",
+                action: "action2",
+                icon: "https://www.respublica.ru/uploads/00/00/00/69/xa/large_9267c233ea84395b.jpg",
+                url: "https://news.yandex.ru/"
+              }
+            ],
             data: {
               image: payload.notification.image,
               buttons: [
                 {
-                  title: payload.notification.button1_title,
-                  action: payload.notification.button1_action,
+                  //title: payload.notification.button1_title,
+                  //action: payload.notification.button1_action
+                  action: "action1"
+                },
+                {
+                  //title: payload.notification.button1_title,
+                  //action: payload.notification.button1_action
+                  action: "action2"
                 }
               ],
               click_action: payload.notification.click_action,
@@ -233,10 +253,10 @@ function Collect_Params() {
               }
             ],*/
 
-    button1_title: "",
-    button1_action: "",
 
-    button2_title: "",
+    button1_action: "https://yandex.ru",
+
+
     button2_action: "",
 
     click_action: $("#basic-url").val(),
