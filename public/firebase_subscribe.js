@@ -8,7 +8,6 @@ const config = {
 firebase.initializeApp(config);
 const messaging = firebase.messaging();
 
-<<<<<<< HEAD
 if (CheckNotification) {
     
 
@@ -99,72 +98,6 @@ if (CheckNotification) {
             }
         });
     });*/
-=======
-// Проверка поддерживаемости уведомлений
-if ('Notification' in window &&
-  'serviceWorker' in navigator &&
-  'localStorage' in window &&
-  'fetch' in window &&
-  'postMessage' in window) {
-  var messaging = firebase.messaging();
-
-  // Проверка подписки
-  if (Notification.permission === 'granted') {
-    //subscribe();
-  }
-
-  // Подписать пользователя
-  $("#form1").on("submit", function (event) {
-    event.preventDefault();
-    //регистрация вручную, мб будет не нужно на хостинге
-    navigator.serviceWorker.register('firebase-messaging-sw.js').then(function (registration) {
-      messaging.useServiceWorker(registration);
-      subscribe();
-    })
-  });
-
-  //Удалить токен
-  $("#deleet_token").on("click", function () {
-    messaging.getToken().then(function (currentToken) {
-        messaging.deleteToken(currentToken).then(function () {
-            console.log('Удаление токена.');
-            setTokenSentToServer(false);
-            location.reload();
-            //$(".alert").addClass("d-none");
-          })
-          .catch(function (error) {
-            showError('Unable to delete token', error);
-          });
-      })
-      .catch(function (error) {
-        showError('Error retrieving Instance ID token', error);
-      });
-  });
-
-
-} else {
-  alert("Browser don`t support Notification in window");
-
-  if (!('Notification' in window)) {
-    showError('Notification not supported');
-  } else if (!('serviceWorker' in navigator)) {
-    showError('ServiceWorker not supported');
-  } else if (!('localStorage' in window)) {
-    showError('LocalStorage not supported');
-  } else if (!('fetch' in window)) {
-    showError('fetch not supported');
-  } else if (!('postMessage' in window)) {
-    showError('postMessage not supported');
-  }
-
-  console.warn('This browser does not support desktop notification.');
-  console.log('Is HTTPS', window.location.protocol === 'https:');
-  console.log('Support Notification', 'Notification' in window);
-  console.log('Support ServiceWorker', 'serviceWorker' in navigator);
-  console.log('Support LocalStorage', 'localStorage' in window);
-  console.log('Support fetch', 'fetch' in window);
-  console.log('Support postMessage', 'postMessage' in window);
->>>>>>> master
 }
 
 //Подписать
@@ -222,7 +155,6 @@ function setTokenSentToServer(currentToken) {
     );
 }
 
-//отправка параметров notification на сервер
 $(function () {
     $("#form2").on("submit", function (event) {
         event.preventDefault();
@@ -246,7 +178,6 @@ function showError(error, error_data) {
 
 function sendNotification() {
 
-<<<<<<< HEAD
     console.log('Send notification');
 
     // hide last notification data
@@ -299,40 +230,11 @@ function Collect_Params() {
                         tag: $("#p3-tag").val(),
                         body_loc_key: $("#p4-body_loc_key").val(),
                         body_loc_args: [
-=======
-  console.log('Send notification');
-
-  // hide last notification data
-
-  messaging.getToken().then(function (currentToken) {
-      fetch('https://fcm.googleapis.com/fcm/send', {
-        method: 'POST',
-        headers: {
-          'Authorization': 'key=' + KEY,
-          'Content-Type': 'application/json'
-        },
-       
-        body: JSON.stringify({
-          // Firebase loses 'image' from the notification.
-          // And you must see this: https://github.com/firebase/quickstart-js/issues/71
-          data: {
-            click_action: $("#basic-url").val(),
-            title: $("#title").val(),
-            message: $("#message").val(),
-            icon: $("#url-icon").val(),
-            image_large: $("#img2").val(),
-            color: $("#p1-color").val(),
-            sound: $("#p2-sound").val(),
-            tag: $("#p3-tag").val(),
-            body_loc_key: $("#p4-body_loc_key").val(),
-            body_loc_args: [
->>>>>>> master
             $("#p5-body_loc_args").val(),
           ],
                         title_loc_key: $("#p6-title_loc_key").val(),
                         title_loc_args: [
             $("#p7-title_loc_args").val()
-<<<<<<< HEAD
           ],
     };
     return Params;
@@ -359,21 +261,6 @@ function CheckNotification() {
             showError('fetch не поддерживается');
         } else if (!('postMessage' in window)) {
             showError('postMessage не поддерживается');
-=======
-          ]
-          },
-          to: currentToken
-        })
-      }).then(function (response) {
-        return response.json();
-      }).then(function (json) {
-        console.log('Response', json);
-
-        if (json.success === 1) {
-          console.log('Успех', json.results[0]);
-        } else {
-          console.log('Ошибка', json.results[0]);
->>>>>>> master
         }
 
         console.warn('Этот браузер не поддерживает desktop notification.');
@@ -388,23 +275,9 @@ function CheckNotification() {
     }
 }
 
-<<<<<<< HEAD
 
 function registr() {
     return navigator.serviceWorker.register('firebase-messaging-sw.js');
 }
 
 
-=======
-function Collect_Params() {
-  var Params = {
-    click_action: $("#basic-url").val(),
-    title: $("#title").val(),
-    body: $("#message").val(),
-    icon: $("#url-icon").val(),
-    image: $("#img2").val(),
-    color: "#c31cd9"
-  };
-  return Params;
-};
->>>>>>> master

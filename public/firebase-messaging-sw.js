@@ -2,7 +2,6 @@
 importScripts('https://www.gstatic.com/firebasejs/5.11.1/firebase-app.js');
 importScripts('https://www.gstatic.com/firebasejs/5.11.1/firebase-messaging.js');
 
-<<<<<<< HEAD
 const KEY = "AAAASqJfht4:APA91bFJaIKpQgX-ZkZlgk9hKf122NCy7H17_KLJU-MnStIIAQzAcg5LBXlCF-s0EjdLMT1Uym44xqURZvS31k7WUW6nf1faCoW6G62wuR8EsCzIneITn2j3ZijitOXQaHgfIHL9NpJV";
 
 var config = {
@@ -12,11 +11,6 @@ var config = {
 //инициализируем подключение к FCM
 firebase.initializeApp(config);
 
-=======
-firebase.initializeApp({
-  messagingSenderId: '320551749342'
-});
->>>>>>> master
 const messaging = firebase.messaging();
 // [END initialize_firebase_in_sw]
 
@@ -37,7 +31,6 @@ messaging.setBackgroundMessageHandler(function(payload) {
 
 //---------------------------------------------------------
 // регистрируем свой обработчик уведомлений
-<<<<<<< HEAD
 //messaging.setBackgroundMessageHandler(function (payload) {
     /*if (typeof payload.data.time != 'undefined') {
       var time = new Date(payload.data.time * 1000);
@@ -59,12 +52,6 @@ messaging.setBackgroundMessageHandler(function(payload) {
 
     // Сохраяем data для получения пареметров в обработчике клика
     payload.data.data = payload.data;*/
-=======
-messaging.setBackgroundMessageHandler(function(payload) {
-
-  // Сохраяем data для получения пареметров в обработчике клика
-  //payload.data.data = payload.data;
->>>>>>> master
 
     // Показываем уведомление
     //return self.registration.showNotification(payload.data.title, payload.data);
