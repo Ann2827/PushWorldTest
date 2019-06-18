@@ -62,33 +62,32 @@
             </button>
           </div>
           <form id="form2">
+            <label><b>Основные поля:</b></label>
             <div class="form-group">
-              <label for="basic-url">Input URL address page</label>
+              <label for="heading">Заголовок</label>
+              <input type="text" class="form-control rounded-0 border-top-0 border-right-0" id="title" aria-describedby="titleHelp" placeholder="title" required value="title">
+            </div>
+            <div class="form-group">
+              <label for="message">Текст уведомления</label>
+              <input type="text" class="form-control rounded-0 border-top-0 border-right-0" id="message" aria-describedby="messageHelp" placeholder="body" value="body">
+            </div>
+            <div class="form-group">
+              <label for="basic-url">Адрес клика по пушу</label>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
                   <span class="input-group-text rounded-0">URL:</span>
                 </div>
-                <input type="url" class="form-control rounded-0 border-top-0 border-right-0" id="basic-url" style="background-color: inherit;">
+                <input type="url" class="form-control rounded-0 border-top-0 border-right-0" id="basic-url" style="background-color: inherit;" value="https://yandex.ru">
               </div>
             </div>
             <div class="form-group">
-              <label for="heading">Title</label>
-              <input type="text" class="form-control rounded-0 border-top-0 border-right-0" id="title" aria-describedby="titleHelp" placeholder="Enter title" required>
-              <small id="titleHelp" class="form-text text-muted">Please, title.</small>
-            </div>
-            <div class="form-group">
-              <label for="message">Message</label>
-              <input type="text" class="form-control rounded-0 border-top-0 border-right-0" id="message" aria-describedby="messageHelp" placeholder="Enter your message">
-              <small id="messageHelp" class="form-text text-muted">Please, input message.</small>
-            </div>
-            <div class="form-group">
-              <label for="basic-url">Input URL address icon</label>
+              <label for="url-icon">Адрес иконки</label>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
                   <span class="input-group-text rounded-0">URL:</span>
                 </div>
-                <input type="url" class="form-control rounded-0 border-top-0 border-right-0" id="url-icon">
-                <button type="button" class="btn btn-outline-secondary rounded-0 ml-1" id="loadPush-Img">Load</button>
+                <input type="url" class="form-control rounded-0 border-top-0 border-right-0" id="url-icon" value="https://www.respublica.ru/uploads/00/00/00/69/xa/large_9267c233ea84395b.jpg">
+                <!--<button type="button" class="btn btn-outline-secondary rounded-0 ml-1" id="loadPush-Img">Load</button>-->
               </div>
             </div>
             <div class="form-group">
@@ -199,7 +198,7 @@
             <button type="submit" class="btn btn-outline-primary rounded-0 center mb-3" id="send-form" form="form2" disabled>Check push</button>
           </form>
         </div>
-        <div class="col">
+        <!--<div class="col">
           <div class="jumbotron jumbotron-fluid p-3 shadow mb-5 rounded">
             <div class="container">
               <div class="row">
@@ -217,7 +216,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div>-->
       </div>
       <div class="row">
         <div id="token_div" style="display: none;">

@@ -1,7 +1,7 @@
 
 
 //Для показа пушей
-messaging.onMessage(function (payload) {
+/*messaging.onMessage(function (payload) {
   console.log('Message received', payload);
 
   // register fake ServiceWorker for show notification on mobile devices
@@ -53,4 +53,4 @@ messaging.onMessage(function (payload) {
       });
     }
   });
-});
+});*/
