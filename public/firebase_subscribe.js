@@ -1,10 +1,12 @@
 const KEY = "AAAASqJfht4:APA91bFJaIKpQgX-ZkZlgk9hKf122NCy7H17_KLJU-MnStIIAQzAcg5LBXlCF-s0EjdLMT1Uym44xqURZvS31k7WUW6nf1faCoW6G62wuR8EsCzIneITn2j3ZijitOXQaHgfIHL9NpJV";
 const SENDER_ID = "320551749342";
 
-firebase.initializeApp({
+const config = {
   apiKey: KEY,
-  messagingSenderId: SENDER_ID
-});
+  messagingSenderId: SENDER_ID,
+};
+
+firebase.initializeApp(config);
 
 // Проверка поддерживаемости уведомлений
 if (CheckNotification) {
@@ -16,10 +18,10 @@ if (CheckNotification) {
   }
 
   // Подписать пользователя
-  $("#form1").on("submit", function (event) {
+  $("#subscribe").on("click", function (event) {
     event.preventDefault();
     //регистрация вручную, мб будет не нужно на хостинге
-    navigator.serviceWorker.register('firebase-messaging-sw.js').then(function (registration) {
+    registr().then(function (registration) {
       messaging.useServiceWorker(registration);
       subscribe();
     })
@@ -190,45 +192,7 @@ function sendNotification() {
       },
 
       body: JSON.stringify({
-        notification: {
-          title: $("#title").val(),
-          body: $("#message").val(),
-          icon: $("#url-icon").val(),
-
-          /*actions: [
-              {
-                action1_title: "",
-                action1_action: "",
-                action1_icon: ""
-              },
-              {
-                action2_title: "",
-                action2_action: "",
-                action2_icon: ""
-              }
-            ],*/
-
-          button1_title: "",
-          button1_action: "",
-
-          button2_title: "",
-          button2_action: "",
-
-          click_action: $("#basic-url").val(),
-          image: $("#img2").val(),
-          color: $("#p1-color").val(),
-          sound: $("#p2-sound").val(),
-          tag: $("#p3-tag").val(),
-          badge: $("#p4-badge").val(),
-          renotify: $("#p5-renotify").val(),//boolean
-          silent: $("#p6-silent").val(),//boolean
-          timestamp: $("#p7-timestamp").val(),
-
-          noscreen: $("#p8-noscreen").val(),
-          sticky: $("#p9-sticky").val(),
-
-
-        },
+        notification: Collect_Params(),
         to: currentToken
       })
     }).then(function (response) {
@@ -252,12 +216,43 @@ function sendNotification() {
 
 function Collect_Params() {
   var Params = {
-    click_action: $("#basic-url").val(),
     title: $("#title").val(),
     body: $("#message").val(),
     icon: $("#url-icon").val(),
+
+    /*actions: [
+              {
+                action1_title: "",
+                action1_action: "",
+                action1_icon: ""
+              },
+              {
+                action2_title: "",
+                action2_action: "",
+                action2_icon: ""
+              }
+            ],*/
+
+    button1_title: "",
+    button1_action: "",
+
+    button2_title: "",
+    button2_action: "",
+
+    click_action: $("#basic-url").val(),
     image: $("#img2").val(),
-    color: "#c31cd9"
+    color: $("#p1-color").val(),
+    sound: $("#p2-sound").val(),
+    tag: $("#p3-tag").val(),
+    badge: $("#p4-badge").val(),
+    renotify: $("#p5-renotify").val(),//boolean
+    silent: $("#p6-silent").val(),//boolean
+    timestamp: $("#p7-timestamp").val(),
+
+    noscreen: $("#p8-noscreen").val(),
+    sticky: $("#p9-sticky").val(),
+
+
   };
   return Params;
 };
@@ -294,4 +289,9 @@ function CheckNotification() {
     console.log('Support postMessage', 'postMessage' in window);
     return false;
   }
+}
+
+
+function registr() {
+  return navigator.serviceWorker.register('firebase-messaging-sw.js');
 }
