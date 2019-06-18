@@ -56,58 +56,52 @@ if (CheckNotification) {
         navigator.serviceWorker.ready.then(function (registration) {
           // Copy data object to get parameters in the click handler
           //payload.notification = JSON.parse(JSON.stringify(payload.notification));
+          console.log("notification поля, которые доходят ", JSON.stringify(payload));
           const showTitle = payload.notification.title;
+          
           const showBody = {
             body: payload.notification.body,
             icon: payload.notification.icon,
-
-            vibrate: 400,
-            direction: 'auto',
-            tag: 'uuid',
-            badge: '',
-            requireInteraction: true,
-
-            /*actions: [
-              {
-                title: payload.notification.actions["0"].action1_title,
-                action: payload.notification.actions["0"].action1_action,
-                icon: payload.notification.actions["0"].action1_icon
-              }
-            ],*/
+            //direction: 'auto',
             actions: [
               {
-                title: "title action1",
+                title: payload.data.button1_title,
                 action: "action1",
-                icon: "https://www.respublica.ru/uploads/00/00/00/69/xa/large_9267c233ea84395b.jpg",
-                url: "https://www.google.ru/"
+                icon: payload.data.button1_icon
               },
               {
-                title: "title action2",
+                title: payload.data.button2_title,
                 action: "action2",
-                icon: "https://www.respublica.ru/uploads/00/00/00/69/xa/large_9267c233ea84395b.jpg",
-                url: "https://news.yandex.ru/"
+                icon: payload.data.button2_icon
               }
             ],
             data: {
-              image: payload.notification.image,
+              image: payload.data.image,
               buttons: [
                 {
-                  //title: payload.notification.button1_title,
-                  //action: payload.notification.button1_action
-                  action: "action1"
+                  action: "action1",
+                  url: payload.data.button1_url
                 },
                 {
-                  //title: payload.notification.button1_title,
-                  //action: payload.notification.button1_action
-                  action: "action2"
+                  action: "action2",
+                  url: payload.data.button2_url
                 }
               ],
+              badge: payload.data.badge,
+              requireInteraction: payload.data.requireInteraction,
+              vibrate: payload.data.vibrate,
               click_action: payload.notification.click_action,
-              color: payload.notification.color,
-              sound: payload.notification.sound,
-              tag: payload.notification.tag
+              color: payload.data.color,
+              sound: payload.data.sound,
+              tag: payload.notification.tag,
+              renotify: payload.data.renotify,
+              silent: payload.data.silent,
+              timestamp: payload.data.timestamp,
+              noscreen: payload.data.noscreen,
+              sticky: payload.data.sticky,
             }
           };
+          console.log("notification показ ", JSON.stringify(showBody));
 
           registration.showNotification(showTitle, showBody);
         }).catch(function (error) {
@@ -212,7 +206,8 @@ function sendNotification() {
       },
 
       body: JSON.stringify({
-        notification: Collect_Params(),
+        notification: Collect_Params_notification(),
+        data: Collect_Params_data(),
         to: currentToken
       })
     }).then(function (response) {
@@ -234,45 +229,39 @@ function sendNotification() {
   });
 }
 
-function Collect_Params() {
+function Collect_Params_notification() {
   var Params = {
     title: $("#title").val(),
     body: $("#message").val(),
     icon: $("#url-icon").val(),
-
-    /*actions: [
-              {
-                action1_title: "",
-                action1_action: "",
-                action1_icon: ""
-              },
-              {
-                action2_title: "",
-                action2_action: "",
-                action2_icon: ""
-              }
-            ],*/
-
-
-    button1_action: "https://yandex.ru",
-
-
-    button2_action: "",
-
     click_action: $("#basic-url").val(),
-    image: $("#img2").val(),
+    tag: $("#p3-tag").val()
+  };
+  return Params;
+};
+
+function Collect_Params_data() {
+  var Params = {
+    button1_title: $("#b1-title").val(),
+    button1_icon: $("#b1-icon").val(),
+    button1_url: $("#b1-url").val(),
+
+    button2_title: $("#b2-title").val(),
+    button2_icon: $("#b2-icon").val(),
+    button2_url: $("#b2-url").val(),
+
+
+    image: $("#img").val(),
     color: $("#p1-color").val(),
     sound: $("#p2-sound").val(),
-    tag: $("#p3-tag").val(),
     badge: $("#p4-badge").val(),
     renotify: $("#p5-renotify").val(),//boolean
     silent: $("#p6-silent").val(),//boolean
     timestamp: $("#p7-timestamp").val(),
+    requireInteraction: $("#p10-requireInteraction").val(),//boolean
 
     noscreen: $("#p8-noscreen").val(),
-    sticky: $("#p9-sticky").val(),
-
-
+    sticky: $("#p9-sticky").val()
   };
   return Params;
 };
