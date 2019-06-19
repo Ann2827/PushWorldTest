@@ -4,6 +4,7 @@ const DEFAULT_PUSH_ICON = "img/test.jpg";
 const DEFAULT_PUSH_IMG = "img/test.jpg";
 const DEFAULT_PUSH_ERROR = "img/error.png";
 
+
 $(function () {
   $("input[type=radio]").on("click", function () {
     if ($("input[type=radio][value=option1]").is(":checked")) {
@@ -38,6 +39,22 @@ $(function () {
     }
   });
 
+  
+  
+  $("#CheckboxSN").on("click", function () {
+    if ($("#CheckboxSN").is(":checked")) {
+      $("#SN").removeAttr("disabled");
+    } else {
+      $("#SN").attr("disabled", "disabled");
+    }
+  });
+  
+  
+  
+  
+  
+  
+  
   $("#loadPush-Img").on("click", function () {
     //CheckImg($("#url-icon").val());
     CheckURL($("#url-icon").val());

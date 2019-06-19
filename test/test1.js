@@ -87,3 +87,100 @@ data: {
     "tag": ""
   }
 }
+  
+  
+  
+  
+  
+  
+  
+  
+  const showBody = {
+    body: payload.notification.body,
+    icon: payload.notification.icon,
+    //direction: 'auto',
+    actions: [
+      {
+        title: payload.data.button1_title,
+        action: 'action1',
+        icon: payload.data.button1_icon
+      },
+      {
+        title: payload.data.button2_title,
+        action: 'action2',
+        icon: payload.data.button2_icon
+      }
+    ],
+    data: {
+      image: payload.data.image,
+      buttons: [
+        {
+          action: 'action1',
+          url: payload.data.button1_url
+        },
+        {
+          action: 'action2',
+          url: payload.data.button2_url
+        }
+      ],
+      badge: payload.data.badge,
+      requireInteraction: payload.data.requireInteraction,
+      vibrate: payload.data.vibrate,
+      click_action: payload.notification.click_action,
+      color: payload.data.color,
+      sound: payload.data.sound,
+      tag: payload.notification.tag,
+      renotify: payload.data.renotify,
+      silent: payload.data.silent,
+      timestamp: payload.data.timestamp,
+      noscreen: payload.data.noscreen,
+      sticky: payload.data.sticky
+    }
+  };
+
+  
+  const showBody = {
+    "body": "payload.notification.body",
+    "icon": "payload.notification.icon",
+    "actions": [
+      {
+        "title": "payload.data.button1_title",
+        "action": "action1",
+        "icon": "payload.data.button1_icon"
+      },
+      {
+        "title": "payload.data.button2_title",
+        "action": "action2",
+        "icon": "payload.data.button2_icon"
+      }
+    ],
+    "data": {
+      "image": "payload.data.image",
+      "buttons": [
+        {
+          "action": "action1",
+          "url": "payload.data.button1_url"
+        },
+        {
+          "action": "action2",
+          "url": "payload.data.button2_url"
+        }
+      ],
+      "badge": "payload.data.badge",
+      "requireInteraction": "payload.data.requireInteraction",
+      "vibrate": "payload.data.vibrate",
+      "click_action": "payload.notification.click_action",
+      "color": "payload.data.color",
+      "sound": "payload.data.sound",
+      "tag": "payload.notification.tag",
+      "renotify": "payload.data.renotify",
+      "silent": "payload.data.silent",
+      "timestamp": "payload.data.timestamp",
+      "noscreen": "payload.data.noscreen",
+      "sticky": "payload.data.sticky"
+    }
+  };
+  
+  
+  
+  {body:payload.notification.body,icon:payload.notification.icon,actions:[{title:payload.data.button1_title,action:'action1',icon:payload.data.button1_icon},{title:payload.data.button2_title,action:'action2',icon:payload.data.button2_icon}],data:{image:payload.data.image,buttons:[{action:'action1',url:payload.data.button1_url},{action:'action2',url:payload.data.button2_url}],badge:payload.data.badge,requireInteraction:payload.data.requireInteraction,vibrate:payload.data.vibrate,click_action:payload.notification.click_action,color:payload.data.color,sound:payload.data.sound,tag:payload.notification.tag,renotify:payload.data.renotify,silent:payload.data.silent,timestamp:payload.data.timestamp,noscreen:payload.data.noscreen,sticky:payload.data.sticky}}

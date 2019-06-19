@@ -1,6 +1,50 @@
 const KEY = "AAAASqJfht4:APA91bFJaIKpQgX-ZkZlgk9hKf122NCy7H17_KLJU-MnStIIAQzAcg5LBXlCF-s0EjdLMT1Uym44xqURZvS31k7WUW6nf1faCoW6G62wuR8EsCzIneITn2j3ZijitOXQaHgfIHL9NpJV";
 const SENDER_ID = "320551749342";
 
+const SNText = `{
+body: payload.notification.body,
+icon: payload.notification.icon,
+badge: payload.data.badge,
+requireInteraction: (payload.data.requireInteraction === 'true'),
+vibrate: payload.data.vibrate,
+color: payload.data.color,
+sound: payload.data.sound,
+tag: payload.notification.tag,
+renotify: payload.data.renotify,
+silent: payload.data.silent,
+timestamp: payload.data.timestamp,
+noscreen: payload.data.noscreen,
+sticky: payload.data.sticky,
+image: payload.data.image,
+//direction: 'auto',
+actions: [
+{
+title: payload.data.button1_title,
+action: 'action1',
+icon: payload.data.button1_icon
+},
+{
+title: payload.data.button2_title,
+action: 'action2',
+icon: payload.data.button2_icon
+}
+],
+data: {
+buttons: [
+{
+action: 'action1',
+url: payload.data.button1_url
+},
+{
+action: 'action2',
+url: payload.data.button2_url
+}
+],
+click_action: payload.notification.click_action
+}
+}`;
+
+
 const config = {
   apiKey: KEY,
   messagingSenderId: SENDER_ID,
@@ -17,6 +61,8 @@ if (CheckNotification) {
     //subscribe();
   }
 
+  $("#SN").text(SNText);
+
   // Подписать пользователя
   $("#subscribe").on("click", function (event) {
     event.preventDefault();
@@ -30,19 +76,19 @@ if (CheckNotification) {
   //Удалить токен
   $("#deleet_token").on("click", function () {
     messaging.getToken().then(function (currentToken) {
-      messaging.deleteToken(currentToken).then(function () {
-        console.log('Удаление токена.');
-        setTokenSentToServer(false);
-        location.reload();
-        //$(".alert").addClass("d-none");
+        messaging.deleteToken(currentToken).then(function () {
+            console.log('Удаление токена.');
+            setTokenSentToServer(false);
+            location.reload();
+            //$(".alert").addClass("d-none");
+          })
+          .catch(function (error) {
+            showError('Unable to delete token', error);
+          });
       })
-        .catch(function (error) {
-        showError('Unable to delete token', error);
-      });
-    })
       .catch(function (error) {
-      showError('Error retrieving Instance ID token', error);
-    });
+        showError('Error retrieving Instance ID token', error);
+      });
   });
 
   //Показ пушей
@@ -58,50 +104,73 @@ if (CheckNotification) {
           //payload.notification = JSON.parse(JSON.stringify(payload.notification));
           console.log("notification поля, которые доходят ", JSON.stringify(payload));
           const showTitle = payload.notification.title;
-          
-          const showBody = {
+
+          var showBody = {
             body: payload.notification.body,
             icon: payload.notification.icon,
+            badge: payload.data.badge,
+            requireInteraction: (payload.data.requireInteraction === 'true'),
+            vibrate: payload.data.vibrate,
+            color: payload.data.color,
+            sound: payload.data.sound,
+            tag: payload.notification.tag,
+            renotify: payload.data.renotify,
+            silent: payload.data.silent,
+            timestamp: payload.data.timestamp,
+            noscreen: payload.data.noscreen,
+            sticky: payload.data.sticky,
+            image: payload.data.image,
             //direction: 'auto',
             actions: [
               {
                 title: payload.data.button1_title,
-                action: "action1",
+                action: 'action1',
                 icon: payload.data.button1_icon
-              },
+                  },
               {
                 title: payload.data.button2_title,
-                action: "action2",
+                action: 'action2',
                 icon: payload.data.button2_icon
-              }
-            ],
+                  }
+                ],
             data: {
-              image: payload.data.image,
               buttons: [
                 {
-                  action: "action1",
+                  action: 'action1',
                   url: payload.data.button1_url
                 },
                 {
-                  action: "action2",
+                  action: 'action2',
                   url: payload.data.button2_url
                 }
               ],
-              badge: payload.data.badge,
-              requireInteraction: payload.data.requireInteraction,
-              vibrate: payload.data.vibrate,
-              click_action: payload.notification.click_action,
-              color: payload.data.color,
-              sound: payload.data.sound,
-              tag: payload.notification.tag,
-              renotify: payload.data.renotify,
-              silent: payload.data.silent,
-              timestamp: payload.data.timestamp,
-              noscreen: payload.data.noscreen,
-              sticky: payload.data.sticky,
+              click_action: payload.notification.click_action
             }
           };
+
+          if ($("#CheckboxSN").is(":checked")) {
+            var text = $("#SN").text();
+            //console.log(text);
+            showBody = eval("(" + text + ")");
+            //console.log(showBody);
+          };
+
+
+
+
+          //$("#SN").text(JSON.stringify(showBody, "", 4));
+
           console.log("notification показ ", JSON.stringify(showBody));
+
+          //if (payload.data.timeout === "")
+          //const timeout = parseInt(payload.data.timeout);
+
+
+          //function func() {
+          //registration.showNotification(showTitle, showBody);
+          //};
+
+          //setTimeout(func, timeout);
 
           registration.showNotification(showTitle, showBody);
         }).catch(function (error) {
@@ -198,35 +267,35 @@ function sendNotification() {
   // hide last notification data
 
   messaging.getToken().then(function (currentToken) {
-    fetch('https://fcm.googleapis.com/fcm/send', {
-      method: 'POST',
-      headers: {
-        'Authorization': 'key=' + KEY,
-        'Content-Type': 'application/json'
-      },
+      fetch('https://fcm.googleapis.com/fcm/send', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'key=' + KEY,
+          'Content-Type': 'application/json'
+        },
 
-      body: JSON.stringify({
-        notification: Collect_Params_notification(),
-        data: Collect_Params_data(),
-        to: currentToken
-      })
-    }).then(function (response) {
-      return response.json();
-    }).then(function (json) {
-      console.log('Response', json);
+        body: JSON.stringify({
+          notification: Collect_Params_notification(),
+          data: Collect_Params_data(),
+          to: currentToken
+        })
+      }).then(function (response) {
+        return response.json();
+      }).then(function (json) {
+        console.log('Response', json);
 
-      if (json.success === 1) {
-        console.log('Успех', json.results[0]);
-      } else {
-        console.log('Ошибка', json.results[0]);
-      }
-    }).catch(function (error) {
-      showError(error);
-    });
-  })
+        if (json.success === 1) {
+          console.log('Успех', json.results[0]);
+        } else {
+          console.log('Ошибка', json.results[0]);
+        }
+      }).catch(function (error) {
+        showError(error);
+      });
+    })
     .catch(function (error) {
-    showError('Error retrieving Instance ID token', error);
-  });
+      showError('Error retrieving Instance ID token', error);
+    });
 }
 
 function Collect_Params_notification() {
@@ -255,10 +324,11 @@ function Collect_Params_data() {
     color: $("#p1-color").val(),
     sound: $("#p2-sound").val(),
     badge: $("#p4-badge").val(),
-    renotify: $("#p5-renotify").val(),//boolean
-    silent: $("#p6-silent").val(),//boolean
+    renotify: $("#p5-renotify").val(), //boolean
+    silent: $("#p6-silent").val(), //boolean
     timestamp: $("#p7-timestamp").val(),
-    requireInteraction: $("#p10-requireInteraction").val(),//boolean
+    requireInteraction: $("#p10-requireInteraction").val(), //boolean
+    timeout: $("p11-timeout").val(),
 
     noscreen: $("#p8-noscreen").val(),
     sticky: $("#p9-sticky").val()
@@ -269,10 +339,10 @@ function Collect_Params_data() {
 
 function CheckNotification() {
   if ('Notification' in window &&
-      'serviceWorker' in navigator &&
-      'localStorage' in window &&
-      'fetch' in window &&
-      'postMessage' in window) {
+    'serviceWorker' in navigator &&
+    'localStorage' in window &&
+    'fetch' in window &&
+    'postMessage' in window) {
     return true;
   } else {
     alert("Browser don`t support Notification in window");
@@ -304,3 +374,31 @@ function CheckNotification() {
 function registr() {
   return navigator.serviceWorker.register('firebase-messaging-sw.js');
 }
+
+
+//преобразование строки в код
+/*function TextToCode(text) {
+  text = Symbol(text, "{", "after");
+  text = Symbol(text, "}", "until");
+  text = Symbol(text, ",", "after");
+  
+  return text;
+}
+
+function Symbol(text, str, key) {
+  switch(key) {
+    case "after":
+      key = 1;
+      break;
+    case "until":
+      key = 0;
+      break;
+    default:
+      break;
+  }; 
+  let pos = -1;
+  while ((pos = text.indexOf(str, pos + key)) != -1) {
+    text = text.substring(0, pos+1) + "\n" + text.substring(pos+1);
+  };
+  return text;
+}*/
