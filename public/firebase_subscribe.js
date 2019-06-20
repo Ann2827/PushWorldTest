@@ -1,48 +1,7 @@
 const KEY = "AAAASqJfht4:APA91bFJaIKpQgX-ZkZlgk9hKf122NCy7H17_KLJU-MnStIIAQzAcg5LBXlCF-s0EjdLMT1Uym44xqURZvS31k7WUW6nf1faCoW6G62wuR8EsCzIneITn2j3ZijitOXQaHgfIHL9NpJV";
 const SENDER_ID = "320551749342";
 
-const SNText = `{
-body: payload.notification.body,
-icon: payload.notification.icon,
-badge: payload.data.badge,
-requireInteraction: (payload.data.requireInteraction === 'true'),
-vibrate: payload.data.vibrate,
-color: payload.data.color,
-sound: payload.data.sound,
-tag: payload.notification.tag,
-renotify: payload.data.renotify,
-silent: payload.data.silent,
-timestamp: payload.data.timestamp,
-noscreen: payload.data.noscreen,
-sticky: payload.data.sticky,
-image: payload.data.image,
-//direction: 'auto',
-actions: [
-{
-title: payload.data.button1_title,
-action: 'action1',
-icon: payload.data.button1_icon
-},
-{
-title: payload.data.button2_title,
-action: 'action2',
-icon: payload.data.button2_icon
-}
-],
-data: {
-buttons: [
-{
-action: 'action1',
-url: payload.data.button1_url
-},
-{
-action: 'action2',
-url: payload.data.button2_url
-}
-],
-click_action: payload.notification.click_action
-}
-}`;
+const SNText = "{\n body: payload.notification.body,\n icon: payload.notification.icon,\n badge: payload.data.badge,\n requireInteraction: (payload.data.requireInteractio==='true'),\n vibrate: payload.data.vibrate,\n color: payload.data.color,\n sound: payload.data.sound,\n tag: payload.notification.tag,\n renotify: payload.data.renotify,\n silent: payload.data.silent,\n timestamp: payload.data.timestamp,\n noscreen: payload.data.noscreen,\n sticky: payload.data.sticky,\n image: payload.data.image,\n actions:[\n {\n title: payload.data.button1_title,\n action: 'action1',\n icon: payload.daa.button1_icon\n },\n {\n title: payload.data.button2_title,\n action: 'action2',\n icon: payload.data.button2_icon\n }\n ],\n data: {\n buttons: [\n {\n action: 'action1',\n url: payload.data.button1_url\n },\n {\n action: 'action2',\n url: payload.data.button2_url\n }\n ],\n click_action: payload.notification.click_action\n }\n }";
 
 
 const config = {
@@ -114,11 +73,11 @@ if (CheckNotification) {
             color: payload.data.color,
             sound: payload.data.sound,
             tag: payload.notification.tag,
-            renotify: payload.data.renotify,
-            silent: payload.data.silent,
+            renotify: (payload.data.renotify === 'true'),
+            silent: (payload.data.silent === 'true'),
             timestamp: payload.data.timestamp,
-            noscreen: payload.data.noscreen,
-            sticky: payload.data.sticky,
+            noscreen: (payload.data.noscreen === 'true'),
+            sticky: (payload.data.sticky === 'true'),
             image: payload.data.image,
             //direction: 'auto',
             actions: [
