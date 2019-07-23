@@ -29,6 +29,7 @@ if (CheckNotification) {
     registr().then(function (registration) {
       messaging.useServiceWorker(registration);
       subscribe();
+      $("#subscribe").attr("disabled", "disabled");
     })
   });
 
