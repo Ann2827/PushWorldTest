@@ -89,8 +89,55 @@ self.addEventListener('notificationclick', function (event) {
             }
         }
 
+      Call();
         // Открываем новое окно
-        return clients.openWindow(target);
+        //return clients.openWindow(target);
       //return window.location.href = 'tel:555-678-1234';
     }));
+  
+//  public class JavaScriptInterface {
+//    private WebView mAppView;
+//    private DroidGap mGap
+//
+//    public JavaScriptInterface (DroidGap gap, WebView view)
+//    {
+//      mAppView = view;
+//      mGap = gap;
+//    }
+//
+//    public void Call(target){
+//      Intent calllIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + target));
+//      startActivity(calldialIntent);
+//    } 
+//  }
+  
+  function Call() {
+    //var calllIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + target));
+    //navigator.startActivity(calllIntent);
+    
+    var tel = navigator.mozTelephony;
+    
+    // Place a call
+    var call = tel.dial("89686233653").then(function(call) {
+
+      // Events for that call
+      call.onstatechange = function (event) {
+        /*
+          Possible values for state:
+          "dialing", "ringing", "busy", "connecting", "connected", 
+          "disconnecting", "disconnected", "incoming"
+      */
+        console.log(event.state);
+      };
+
+      // Above options as direct events
+      call.onconnected = function () {
+        // Call was connected
+      };
+
+      call.ondisconnected = function () {
+        // Call was disconnected
+      };
+    });
+  }
 });
