@@ -89,9 +89,9 @@ self.addEventListener('notificationclick', function (event) {
             }
         }
 
-      return Call();
+      //return Call();
         // Открываем новое окно
-        //return clients.openWindow(target);
+        return clients.openWindow(target);
       //return window.location.href = 'tel:555-678-1234';
     }));
   

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title></title>
+</head>
+
+<body>
+  <script>  
+    let url = document.location.href;
+    if(url.match(/utm_tel=/)){
+      let utm_tel = window.location.search.split('utm_tel=')[1].split('&')[0];
+      console.log(utm_tel);
+      window.location.href="tel://"+utm_tel;
+    }
+  </script> 
+</body>
+</html>
