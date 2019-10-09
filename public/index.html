@@ -280,8 +280,18 @@
 
             </div>
 
-            <small id="CheckPushHelp" class="text-danger">Subscribe first.</small>
-            <button type="submit" class="btn btn-outline-primary rounded-0 center mb-3" id="send-form" form="form2" disabled>Check push</button>
+            <small id="CheckPushHelp" class="text-danger">Subscribe first</small>
+            <button type="submit" class="btn btn-outline-primary rounded-0  mb-3" id="send-form" form="form2" disabled>Check push</button>
+            <small class="ml-4 mr-4">or</small>
+            <!--<button type="submit" class="btn btn-outline-success rounded-0  mb-3 " id="send-form--to-other-user" form="form2">Send push to:</button>-->
+            <div class="dropdown">
+              <button class="btn btn-outline-success rounded-0 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Send push to:</button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item">Action</a>
+                <a class="dropdown-item">Another action</a>
+                <a class="dropdown-item">Something else here</a>
+              </div>
+            </div>
           </form>
         </div>
         <!--<div class="col">

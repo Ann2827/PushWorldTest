@@ -174,6 +174,7 @@ function sendTokenToServer(currentToken) {
     console.log('Отправка токена на сервер...');
     setTokenSentToServer(currentToken);
     ShowToken(currentToken);
+    WriteToken(currentToken);
   } else {
     console.log('Токен уже отправлен на сервер.');
     ShowToken(currentToken);
@@ -183,7 +184,7 @@ function sendTokenToServer(currentToken) {
 //Отобразить на странице токен
 function ShowToken(currentToken) {
   $(".alert").alert("show");
-  $(".alert p").html("<b>Токен:</b> " + currentToken);
+  $(".alert p").html("<b>Токен: </b>" + currentToken);
 }
 
 // localStorage, если уже подписан
@@ -333,6 +334,10 @@ function CheckNotification() {
 
 function registr() {
   return navigator.serviceWorker.register('firebase-messaging-sw.js');
+}
+
+function WriteToken(currentToken) {
+  
 }
 
 
