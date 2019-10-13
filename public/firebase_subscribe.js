@@ -170,21 +170,24 @@ function subscribe() {
 
 // Отправка ID на сервер
 function sendTokenToServer(currentToken) {
+  let name = ProcessingToken(currentToken);
   if (!isTokenSentToServer(currentToken)) {
     console.log('Отправка токена на сервер...');
     setTokenSentToServer(currentToken);
-    ShowToken(currentToken);
-    WriteToken(currentToken);
   } else {
     console.log('Токен уже отправлен на сервер.');
-    ShowToken(currentToken);
   }
+  ShowToken(currentToken, name);
 }
 
 //Отобразить на странице токен
-function ShowToken(currentToken) {
+function ShowToken(currentToken, name) {
   $(".alert").alert("show");
-  $(".alert p").html("<b>Токен: </b>" + currentToken);
+  if (name) {
+    $(".alert p").html("<b>Пользователь: </b>" + name + " <b>Токен: </b>" + currentToken);
+  } else {
+    $(".alert p").html("<b>Токен: </b>" + currentToken);
+  }
 }
 
 // localStorage, если уже подписан
@@ -334,6 +337,20 @@ function CheckNotification() {
 
 function registr() {
   return navigator.serviceWorker.register('firebase-messaging-sw.js');
+}
+
+function ProcessingToken(currentToken) {
+  readUserList().then(
+    response => {
+      for (let i = 0; i < response.data.length; i++) {
+        if (currentToken === response.data[i].token_id) {
+          return response.data[i].description
+        }
+      };
+      return false;
+    },
+    error => alert(`Rejected: ${error}`)
+  );
 }
 
 function WriteToken(currentToken) {

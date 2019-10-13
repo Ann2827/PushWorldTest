@@ -39,8 +39,8 @@ $(function () {
     }
   });
 
-  
-  
+
+
   $("#CheckboxSN").on("click", function () {
     if ($("#CheckboxSN").is(":checked")) {
       $("#SN").removeAttr("disabled");
@@ -48,13 +48,13 @@ $(function () {
       $("#SN").attr("disabled", "disabled");
     }
   });
-  
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
+
   $("#loadPush-Img").on("click", function () {
     //CheckImg($("#url-icon").val());
     CheckURL($("#url-icon").val());
@@ -78,6 +78,10 @@ $(function () {
     };
   });
 
+  $("#dropdownMenuButton").on("click", function () {
+    showUserList();
+  });
+
   ChangeAlert();
 
 })
@@ -88,20 +92,20 @@ function CheckImg(url) {
   return new Promise(function (resolve, reject) {
     var xhr = new XHR();
     //xhr.open('GET', url, true);
-    var promise = new Promise(function(resolve, reject){
+    var promise = new Promise(function (resolve, reject) {
       alert("step1");
       resolve(xhr.open('GET', url, true));
       alert("step2");
     });
 
-    promise.then(xhr.onload = function(){
+    promise.then(xhr.onload = function () {
       //alert( this.responseText );
       alert("step3");
       alert(this.status);
       if (this.status == 200) {
         //resolve(this.response);
         alert("step4");
-        alert( this.responseText );
+        alert(this.responseText);
       } else {
         var error = new Error(this.statusText);
         error.code = this.status;
@@ -116,11 +120,11 @@ function CheckImg(url) {
       reject(new Error("Network Error"));
       flag = false;
       alert("step8");
-    }).then(function(){
+    }).then(function () {
       alert("step9");
       xhr.send();
       alert("step10");
-    }).then(function(){
+    }).then(function () {
       alert(flag);
       alert("step11");
     });
@@ -245,4 +249,44 @@ function update() {
   if (xmlhttp.readyState === 4) {
     alert(xmlhttp.status);
   }
+}
+
+function showUserList() {
+  readUserList().then(
+    response => {
+      let str = "";
+      for (let i = 0; i < response.data.length; i++) {
+        str += '<a class="dropdown-item" id="' + response.data[i].id + '" data-value="' + response.data[i].token_id + '">' + response.data[i].description + '</a>';
+      };
+      document.getElementById('showUserList').innerHTML = str;
+    },
+    error => alert(`Rejected: ${error}`)
+  );
+
+}
+
+function readUserList() {
+
+  return new Promise(function (resolve, reject) {
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', './subscribers.json', true);
+
+    xhr.onload = function () {
+      if (this.status == 200) {
+        resolve(JSON.parse(this.response));
+      } else {
+        var error = new Error(this.statusText);
+        error.code = this.status;
+        reject(error);
+      }
+    };
+
+    xhr.onerror = function () {
+      reject(new Error("Network Error"));
+    };
+
+    xhr.send(null);
+  });
+
 }
