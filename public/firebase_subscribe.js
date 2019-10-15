@@ -170,14 +170,18 @@ function subscribe() {
 
 // Отправка ID на сервер
 function sendTokenToServer(currentToken) {
-  let name = ProcessingToken(currentToken);
-  if (!isTokenSentToServer(currentToken)) {
-    console.log('Отправка токена на сервер...');
-    setTokenSentToServer(currentToken);
-  } else {
-    console.log('Токен уже отправлен на сервер.');
-  }
-  ShowToken(currentToken, name);
+  let name = ProcessingToken(currentToken).then(response => {
+    console.log(name);
+    alert('name ' + name);
+    if (!isTokenSentToServer(currentToken)) {
+      console.log('Отправка токена на сервер...');
+      setTokenSentToServer(currentToken);
+    } else {
+      console.log('Токен уже отправлен на сервер.');
+    }
+    ShowToken(currentToken, name);
+  });
+
 }
 
 //Отобразить на странице токен
@@ -340,21 +344,23 @@ function registr() {
 }
 
 function ProcessingToken(currentToken) {
-  readUserList().then(
-    response => {
-      for (let i = 0; i < response.data.length; i++) {
-        if (currentToken === response.data[i].token_id) {
-          return response.data[i].description
-        }
-      };
-      return false;
-    },
-    error => alert(`Rejected: ${error}`)
-  );
+  return new Promise(function (resolve) {
+    readUserList().then(
+      response => {
+        for (let i = 0; i < response.data.length; i++) {
+          if (currentToken === response.data[i].token_id) {
+            return resolve(response.data[i].description)
+          }
+        };
+        return false;
+      },
+      error => alert(`Rejected: ${error}`)
+    );
+  })
 }
 
 function WriteToken(currentToken) {
-  
+
 }
 
 
