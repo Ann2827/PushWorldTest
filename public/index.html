@@ -11,6 +11,36 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://www.gstatic.com/firebasejs/5.11.1/firebase.js"></script>
 
+      <!-- Marquiz script start -->
+      <script src="//script.marquiz.ru/v1.js" type="application/javascript"></script>
+      <script>
+          document.addEventListener("DOMContentLoaded", function() {
+              Marquiz.init({
+                  host: '//quiz.marquiz.ru',
+                  id: '5f1ad66818987c00442a3e0e',
+                  autoOpen: 5,
+                  autoOpenFreq: 'always',
+                  openOnExit: false
+              });
+          });
+      </script>
+      <!-- Marquiz script end -->
+
+
+    <script>
+      // var request = new XMLHttpRequest();
+      // request.open('GET', '../../../../Desktop/chr/test.json', false);
+      // request.send();
+      //
+      // var textFileContent = request.responseText
+      // console.log('file: ', textFileContent)
+    </script>>
+
+<!--    <script language="VBScript">-->
+<!--Dim fso, f1-->
+<!--Set fso = CreateObject("Scripting.FileSystemObject")-->
+<!--Set f1 = fso.CreateTextFile("/Users/ann.bystrova/Desktop/testfile.txt", True)-->
+<!--</script>-->
     <style>
       .center {
         display: block;
@@ -63,6 +93,9 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-7">
+            <div class="marquiz__container">
+                <a class="marquiz__button marquiz__button_blicked marquiz__button_rounded marquiz__button_shadow" href="#popup:marquiz_5f1ad66818987c00442a3e0e" data-fixed-side="" data-alpha-color="rgba(211, 64, 133, 0.5)" data-color="#d34085" data-text-color="#ffffff">Пройти тест</a>
+            </div>
           <form id="form1">
             <button type="submit" class="btn btn-secondary rounded-0 btn-lg btn-block mb-5" id="subscribe">Subscribe</button>
           </form>
